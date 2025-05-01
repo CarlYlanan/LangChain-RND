@@ -1,0 +1,14 @@
+Auckland District Health Board Research and Development Project
+
+Goal: Automated Clinical Grading
+
+Tools:
+LangChain (Main Framework)
+OpenAI
+Retrieval Augmented Generation
+
+Processes:
+ETL (Extraction, Transform, Loading)
+
+Required/Suggested Understanding:
+Medical/Clinical Terms
