@@ -6,6 +6,7 @@ Tools:
 LangChain (Main Framework)
 OpenAI
 Retrieval Augmented Generation
+SQL
 
 Processes:
 ETL (Extraction, Transform, Loading)
