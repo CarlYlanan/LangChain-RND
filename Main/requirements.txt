@@ -1,0 +1,7 @@
+#Requirement for loading pdfs (install in root directory)
+pip install langchain 
+pip install openai 
+pip install python-dotenv 
+pip install -U langchain-community
+pip install pypdf
+pip install langchain_openai
