@@ -1,5 +1,1 @@
-.env
-<<<<<<< HEAD
-.env
-=======
->>>>>>> b9a31942 (Add .env to .gitignore)
+**/.env
