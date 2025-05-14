@@ -26,7 +26,7 @@ def clean_text(text: str) -> str:
 
 
 # Importing pdfreader to read sample documents
-loader1 = PyPDFLoader("sample_documents/sample1.pdf")
+loader1 = PyPDFLoader("../sample_documents/sample1.pdf")
 pages = loader1.load()
 
 # Loop through all pages within pdf and printing out cleaned text
