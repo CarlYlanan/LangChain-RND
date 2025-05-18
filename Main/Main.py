@@ -1,8 +1,8 @@
-from dotenv import load_dotenv
-import openai
-import os
+from Ingester.py import ingesting_pdf
 
-api_key = os.getenv("api_key")
+def etl_process(path: str):
+    pages = ingesting_pdf(path)
 
-print(input("howdy?\n"))
-
+if __name__ == "__main__":
+    sample_document_path = "../sample_documents/sample1.pdf"
+    etl_process(sample_document_pdf)
