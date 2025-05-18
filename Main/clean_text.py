@@ -1,7 +1,4 @@
 import re
-from langchain.document_loaders import PyPDFLoader
-
-import re
 
 def clean_text(text: str) -> str:
     """
@@ -21,16 +18,3 @@ def clean_text(text: str) -> str:
     cleaned_lines = [re.sub(r'\s+', ' ', line).strip() for line in lines]
 
     return '\n'.join(cleaned_lines)
-   
-
-
-
-# Importing pdfreader to read sample documents
-loader1 = PyPDFLoader("../sample_documents/sample1.pdf")
-pages = loader1.load()
-
-# Loop through all pages within pdf and printing out cleaned text
-for i, page in enumerate(pages):
-    cleaned = clean_text(page.page_content)
-    print(f"\n--- Cleaned Page {i + 1} ---\n")
-    print(cleaned)
