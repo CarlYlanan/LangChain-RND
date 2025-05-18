@@ -1,5 +1,5 @@
 #Importing PdfReader to read sample documents
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 
 #Creating function for ingesting pdf with parameter of "path"
 def ingesting_pdf(path: str):
