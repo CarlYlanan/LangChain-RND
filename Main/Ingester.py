@@ -1,11 +1,8 @@
 #Importing PdfReader to read sample documents
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 
-#Providing path to pdf file
-loader1 = PyPDFLoader("../sample_documents/sample1.pdf")
-pages = loader1.load()
-
-#Loop through all pages within pdf and printing out its context
-for page in pages:
-    #Printing content within pdf file to terminal for now
-    print(page.page_content)
+#Creating function for ingesting pdf with parameter of "path"
+def ingesting_pdf(path: str):
+    #Lodaing pdf via parameter provided
+    loader = PyPDFLoader(path)
+    return loader.load()

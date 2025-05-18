@@ -1,0 +1,77 @@
+import os
+import re
+from typing_extensions import TypedDict, Annotated
+from langchain_openai import ChatOpenAI
+from langchain_community.document_loaders import PyPDFLoader
+
+
+
+# Define the schema using TypedDict and Annotated
+class MedicalKeywordExtraction(TypedDict):
+    patient_id: Annotated[str, "Patient identification or NHI"]
+    diagnoses: Annotated[list[str], "Medical diagnoses mentioned in the report"]
+    symptoms: Annotated[list[str], "Symptoms or issues the patient is experiencing"]
+    treatments: Annotated[list[str], "Treatments, interventions, or medical devices used"]
+
+def ingest_pdf(pdf_path: str):
+    """Loads a PDF and returns document objects."""
+    loader = PyPDFLoader(pdf_path)
+    return loader.load()
+
+def clean_text(text: str) -> str:
+    """
+    Cleans text by:
+    - Removing unwanted special characters
+    - Preserving useful punctuation (. , : ( ) / - @ ')
+    - Collapsing multiple spaces while keeping newlines
+    """
+    allowed_punctuation = r"[^\w\s\.,:()/@'-]"
+    text = re.sub(allowed_punctuation, '', text)
+
+    lines = text.splitlines()
+    cleaned_lines = [re.sub(r'\s+', ' ', line).strip() for line in lines]
+
+    return '\n'.join(cleaned_lines)
+
+def normalise_text(text: str) -> str:
+    """Converts all text to lowercase."""
+    return text.lower()
+
+def extract_medical_keywords(pdf_path: str):
+    """Extracts structured medical keywords from a cleaned and normalized PDF."""
+    documents = ingest_pdf(pdf_path)  # Load the PDF
+
+    # Initialize the chat model with structured output
+    llm = ChatOpenAI(temperature=0)
+    structured_llm = llm.with_structured_output(MedicalKeywordExtraction)
+
+    results = []
+
+    for i, doc in enumerate(documents):
+        print(f"Extracting from Document {i+1}...")
+
+        # Apply text cleaning and normalization before extraction
+        cleaned_content = clean_text(doc.page_content)
+        normalized_content = normalise_text(cleaned_content)
+
+        try:
+            result = structured_llm.invoke(normalized_content)  # Use cleaned & normalized text
+            results.append(result)
+        except Exception as e:
+            print(f"Error processing Document {i+1}: {e}")
+
+        print("\n" + "-"*50 + "\n")
+
+    return results
+
+# Example usage
+pdf_path = 'E:/Project_cloned_Github_repository/LangChain-RND/Main/sample1.pdf'
+extracted_data = extract_medical_keywords(pdf_path)
+
+# Save structured extraction to a file
+output_file = "extracted_medical_keywords.txt"
+with open(output_file, "w", encoding="utf-8") as f:
+    for item in extracted_data:
+        f.write(str(item) + "\n")
+
+print(f"Extracted medical keywords saved to {output_file}")
