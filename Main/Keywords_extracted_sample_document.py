@@ -4,10 +4,10 @@ from langchain_openai import ChatOpenAI
 from langchain_community.document_loaders import PyPDFLoader
 
 # Optional: Set your OpenAI API key here
-os.environ["OPENAI_API_KEY"] = ""
+# os.environ["OPENAI_API_KEY"] = ""
 
 # Load the PDF document
-pdf_loader = PyPDFLoader(r'E:\Git\LangChain_Project\LangChain-RND\sample_documents\sample1.pdf')
+pdf_loader = PyPDFLoader('../sample_documents/sample1.pdf')
 documents = pdf_loader.load()
 
 # Print the loaded documents
