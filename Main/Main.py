@@ -1,6 +1,7 @@
-from ingester import ingesting_pdf
+from Ingester import ingesting_pdf
 from clean_text import clean_text
 from normalise_text import normalise_text
+from classifier import run_classification_pipeline
 
 def etl_process(path: str):
     #Utilising ingesting function
@@ -21,5 +22,10 @@ def etl_process(path: str):
     return normalised_data 
 
 if __name__ == "__main__":
-    sample_document_path = "../sample_documents/sample1.pdf"
-    etl_process(sample_document_path)
+    sample_document_path = "sample_documents/sample1.pdf"
+
+    #Extract, clean, normalise
+    processed_text = etl_process(sample_document_path)
+
+    #Run classification on cleaned text
+    run_classification_pipeline(processed_text)
