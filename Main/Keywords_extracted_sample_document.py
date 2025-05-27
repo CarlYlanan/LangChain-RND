@@ -3,8 +3,6 @@ from typing_extensions import TypedDict, Annotated
 from langchain_openai import ChatOpenAI
 from langchain_community.document_loaders import PyPDFLoader
 
-# Optional: Set your OpenAI API key here
-# os.environ["OPENAI_API_KEY"] = ""
 
 # Load the PDF document
 pdf_loader = PyPDFLoader('../sample_documents/sample1.pdf')

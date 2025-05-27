@@ -1,0 +1,2 @@
+Patient ID: NHI12345. The patient reports persistent headaches and blurred vision.
+    Diagnosed with hypertension and type 2 diabetes. Currently on metformin and using a CPAP machine at night.
