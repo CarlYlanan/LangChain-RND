@@ -1,9 +1,12 @@
-from ingester import ingesting_pdf
+from Ingester import ingesting_pdf
 from clean_text import clean_text
 from normalise_text import normalise_text
 from extraction import extract_keywords
 from classifier import run_classification_pipeline
 from typing_extensions import TypedDict, Annotated
+
+from database import insert_validated_med_results
+from datetime import datetime
 
 # Define the schema using TypedDict and Annotated
 class MedicalKeywordExtraction(TypedDict):
@@ -34,6 +37,31 @@ def etl_process(path: str):
     return extracted_keywords_results
 
 
+def save_to_database(classified_results: list[dict], source_path: str):
+    formatted_records = []
+
+    for item in classified_results:
+        record = {
+            "patient_name": "Unknown",  # replace if available in `item`
+            "date_of_birth": None,
+            "date_of_appointment": datetime.now(),
+            "nhs_number": item.get("patient_id", "MISSING_NHS"),
+            "hospital_id": None,
+            "address": None,
+            "email": None,
+            "medical_staff": None,
+            "symptoms": ', '.join(item.get("symptoms", [])),
+            "diagnosis": ', '.join(item.get("diagnoses", [])),
+            "treatment_plan": ', '.join(item.get("treatments", [])),
+            "urgency_value": "Medium",
+            "record_status": "Active",
+            "source_document": source_path,
+        }
+
+        formatted_records.append(record)
+
+    insert_validated_med_results(formatted_records)
+
 if __name__ == "__main__":
     sample_document_path = "../sample_documents/sample1.pdf"
 
@@ -42,3 +70,6 @@ if __name__ == "__main__":
 
     #Run classification on cleaned text
     run_classification_pipeline(processed_text)
+
+    #Save classified results to database
+    save_to_database(processed_text, sample_document_path)
