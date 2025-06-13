@@ -12,7 +12,7 @@ load_dotenv()
 #Set up OpenAI model
 llm = ChatOpenAI(temperature=0)
 
-#Prompt for classification (structured, semi-strucured, or unstructured)
+#Prompt for classification (structured, semi strucured, or unstructured)
 prompt = PromptTemplate.from_template(
     """You are a document classification assistant. Given a clinical paragraph, classify it as one of:
 

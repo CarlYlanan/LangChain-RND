@@ -5,3 +5,4 @@ pip install python-dotenv
 pip install -U langchain-community
 pip install pypdf
 pip install langchain_openai
+pip install sqlalchemy psycopg2-binary pydantic
