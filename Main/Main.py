@@ -1,7 +1,7 @@
-from Ingester import ingesting_pdf
+from ingester import ingesting_pdf
 from clean_text import clean_text
 from normalise_text import normalise_text
-from extraction import extract_keywords
+from keyword_extraction import extract_keywords
 from classifier import run_classification_pipeline
 from typing_extensions import TypedDict, Annotated
 
