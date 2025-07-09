@@ -35,10 +35,11 @@ def classify_chunk(chunk: str) -> str:
     print(f"\n🔹 Classified as: {label}\n🔸 Preview: {chunk[:150]}...\n")
     return label
 
-def split_into_chunks(text: str, min_words=3) -> list:
+def split_into_chunks(text: str, min_words=1) -> list:
     """Split full document into paragraph-like chunks using blank lines."""
     raw_chunks = re.split(r"\n\s*\n", text)
     return [chunk.strip() for chunk in raw_chunks if len(chunk.strip().split()) >= min_words]
+
 
 def clean_structured_chunk(chunk):
     lines = chunk.splitlines()
