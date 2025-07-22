@@ -27,7 +27,7 @@ llm = ChatOpenAI(model="gpt-4o", temperature=0)
 structured_llm = llm.with_structured_output(MedicalKeywordExtraction, method="function_calling")
 
 
-def extract_keywords(input_text):
+""" def extract_keywords(input_text):
     response = structured_llm.stream(input_text)
 
     return (
@@ -35,6 +35,20 @@ def extract_keywords(input_text):
         f"Diagnoses:\n" + "\n".join(response["diagnoses"]) + "\n\n"
         f"Symptoms:\n" + "\n".join(response["symptoms"]) + "\n\n"
         f"Treatments:\n" + "\n".join(response["treatments"])
+    ) """
+
+
+def extract_keywords(input_text):
+    last_response = None
+    for partial_response in structured_llm.stream(input_text):
+        last_response = partial_response
+    
+    if last_response is None:
+        raise ValueError("No response from LLM")
+    
+    return (
+        f"Patient ID: {last_response['patient_id']}\n\n"
+        f"Diagnoses:\n" + "\n".join(last_response["diagnoses"]) + "\n\n"
+        f"Symptoms:\n" + "\n".join(last_response["symptoms"]) + "\n\n"
+        f"Treatments:\n" + "\n".join(last_response["treatments"])
     )
-
-
