@@ -1,153 +1,75 @@
 from sqlalchemy import (
-    Column, Integer, String, Date, Text, TIMESTAMP, DECIMAL, func
+    Column, Integer, String, Date, Text, Boolean, ForeignKey, DECIMAL, TIMESTAMP, func
 )
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
-class MedResult(Base):
-    __tablename__ = 'med_results'
+# Patients info
+class Patient(Base):
+    __tablename__ = 'patients'
 
     patient_id = Column(Integer, primary_key=True, autoincrement=True)
-
-    # Patient Info
-    patient_name = Column(String(255), nullable=False)
-    date_of_birth = Column(Date)
+    name = Column(String(255), nullable=False)
+    dob = Column(Date)
     gender = Column(String(50))
     nhs_number = Column(String(20), unique=True, nullable=False)
-    hospital_id = Column(String(50))
-    patient_address = Column(Text)
-    patient_email = Column(String(255))
-    patient_phone_number = Column(String(50))
+    phone_number = Column(String(50))
+    email = Column(String(255))
+    pregnancy = Column(Boolean)
 
-    # Appointment Details
-    date_of_appointment = Column(TIMESTAMP)
-    contact_type = Column(String(100))
-    consultation_method = Column(String(100))
-    seen_by = Column(String(255))
-    outcome = Column(Text)
+    #Relationships through primary and foreign keys
+    notes = relationship('NoteToTriage', back_populates='patient')
+    results = relationship('PatientResult', back_populates='patient')
 
-    # GP Info
-    gp_name = Column(String(255))
-    gp_practice_id = Column(String(50))
-    gp_address = Column(Text)
-    gp_contact_number = Column(String(50))
 
-    # Clinical Summary
-    diagnosis = Column(Text)
-    issues = Column(Text)
-    clinical_history = Column(Text)
-    weight_kg = Column(DECIMAL(5, 2))
-    height_cm = Column(DECIMAL(5, 2))
-    bmi = Column(DECIMAL(5, 2))
-    estimated_energy_kcal = Column(Integer)
-    estimated_protein_g = Column(Integer)
-    estimated_fluid_ml = Column(Integer)
-    bowel_function = Column(Text)
-    pressure_area_status = Column(Text)
-    allergies = Column(Text)
-    feeding_regimen = Column(Text)
+# Notes to triage
+class NoteToTriage(Base):
+    __tablename__ = 'notes_to_triage'
 
-    # Medication and Device Changes
-    medication_name = Column(String(255))
-    medication_form = Column(String(100))
-    administration_route = Column(String(100))
-    administration_site = Column(String(100))
-    administration_method = Column(String(100))
-    dose_amount = Column(String(100))
-    dose_schedule = Column(Text)
-    additional_instructions = Column(Text)
-    medication_status = Column(String(100))
-    medication_change_reason = Column(Text)
-    medication_change_date = Column(Date)
-    medication_change_description = Column(Text)
-    pharmacy_contact = Column(Text)
-    medication_comment = Column(Text)
-
-    # Actions and Notes
-    actions_for_staff = Column(Text)
-    actions_for_patient = Column(Text)
-    advice_given = Column(Text)
-
-    # Metadata
-    completed_by = Column(String(255))
-    record_completion_date = Column(TIMESTAMP)
-    record_status = Column(String(50), default='Active')
-    urgency_value = Column(String(50), default='Medium')
-    source_document = Column(String(500))
+    note_id = Column(Integer, primary_key=True, autoincrement=True)
+    patient_id = Column(Integer, ForeignKey('patients.patient_id', ondelete='CASCADE'))
+    text = Column(Text, nullable=False)
+    status = Column(String(20), default='pending')
     created_at = Column(TIMESTAMP, server_default=func.now())
-    updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
+
+    #Relationships through primary and foreign keys
+    patient = relationship('Patient', back_populates='notes')
+    results = relationship('PatientResult', back_populates='note')
 
 
-class RecentUpdate(Base):
-    __tablename__ = 'recent_updates'
+# Rules for grading algorithm 
+class Rule(Base):
+    __tablename__ = 'rules'
 
-    patient_id = Column(Integer, primary_key=True, autoincrement=True)
+    rule_id = Column(Integer, primary_key=True, autoincrement=True)
+    priority = Column(String(50))
+    target_timeframe = Column(String(50))
+    referral_category = Column(String(100))
+    symptoms = Column(Text)
+    trigger_terms = Column(Text)
+    clinical_context = Column(Text)
+    age_min = Column(Integer)
 
-    # Patient Info
-    patient_name = Column(String(255), nullable=False)
-    date_of_birth = Column(Date)
-    gender = Column(String(50))
-    nhs_number = Column(String(20), unique=True, nullable=False)
-    hospital_id = Column(String(50))
-    patient_address = Column(Text)
-    patient_email = Column(String(255))
-    patient_phone_number = Column(String(50))
+    # This relationship lets you access all PatientResult info associated with a given Rule
+    results = relationship('PatientResult', back_populates='rule')
 
-    # Appointment Details
-    date_of_appointment = Column(TIMESTAMP)
-    contact_type = Column(String(100))
-    consultation_method = Column(String(100))
-    seen_by = Column(String(255))
-    outcome = Column(Text)
 
-    # GP Info
-    gp_name = Column(String(255))
-    gp_practice_id = Column(String(50))
-    gp_address = Column(Text)
-    gp_contact_number = Column(String(50))
+# Final patient results
+class PatientResult(Base):
+    __tablename__ = 'patient_results'
 
-    # Clinical Summary
-    diagnosis = Column(Text)
-    issues = Column(Text)
-    clinical_history = Column(Text)
-    weight_kg = Column(DECIMAL(5, 2))
-    height_cm = Column(DECIMAL(5, 2))
-    bmi = Column(DECIMAL(5, 2))
-    estimated_energy_kcal = Column(Integer)
-    estimated_protein_g = Column(Integer)
-    estimated_fluid_ml = Column(Integer)
-    bowel_function = Column(Text)
-    pressure_area_status = Column(Text)
-    allergies = Column(Text)
-    feeding_regimen = Column(Text)
+    result_id = Column(Integer, primary_key=True, autoincrement=True)
+    patient_id = Column(Integer, ForeignKey('patients.patient_id', ondelete='CASCADE'))
+    note_id = Column(Integer, ForeignKey('notes_to_triage.note_id', ondelete='CASCADE'))
+    rule_id = Column(Integer, ForeignKey('rules.rule_id'))
+    matched_trigger_terms = Column(Text)
+    negation_detected = Column(Boolean)
+    confidence_score = Column(DECIMAL(3, 2))
+    triaged_at = Column(TIMESTAMP, server_default=func.now())
 
-    # Medication and Device Changes
-    medication_name = Column(String(255))
-    medication_form = Column(String(100))
-    administration_route = Column(String(100))
-    administration_site = Column(String(100))
-    administration_method = Column(String(100))
-    dose_amount = Column(String(100))
-    dose_schedule = Column(Text)
-    additional_instructions = Column(Text)
-    medication_status = Column(String(100))
-    medication_change_reason = Column(Text)
-    medication_change_date = Column(Date)
-    medication_change_description = Column(Text)
-    pharmacy_contact = Column(Text)
-    medication_comment = Column(Text)
+    #Relationships through primary and foreign keys
+    patient = relationship('Patient', back_populates='results')
+    note = relationship('NoteToTriage', back_populates='results')
+    rule = relationship('Rule', back_populates='results')
 
-    # Actions and Notes
-    actions_for_staff = Column(Text)
-    actions_for_patient = Column(Text)
-    advice_given = Column(Text)
-
-    # Metadata
-    completed_by = Column(String(255))
-    record_completion_date = Column(TIMESTAMP)
-    record_status = Column(String(50), default='Active')
-    urgency_value = Column(String(50), default='Medium')
-    source_document = Column(String(500))
-    created_at = Column(TIMESTAMP, server_default=func.now())
-    updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
