@@ -12,11 +12,34 @@ from langchain_openai import ChatOpenAI
 from med_models import Base, Patient, NoteToTriage, Rule, PatientResult # Import all models
 from schemas import MedicalKeywordExtraction, PatientDemographics # Import the new schema
 
-# Load environment variables
-load_dotenv(dotenv_path=".env")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") # Use OPENAI_API_KEY as per LangChain
+import os
+from dotenv import load_dotenv
+import sys # You'll need this import too
+
+# --- Calculate the path to the .env file ---
+# os.path.dirname(__file__) gets the directory of the current script (e.g., .../LangChain-RND/Main)
+# os.path.abspath(...) converts it to an absolute path
+# os.path.join(..., '..') moves up one directory (to .../LangChain-RND)
+# os.path.join(..., '.env') then adds the .env filename
+dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '.env')
+
+# Load environment variables from the calculated path
+load_dotenv(dotenv_path=dotenv_path)
+
+# --- DEBUGGING (optional, but good to check if it's working) ---
+print(f"DEBUG: Script location: {os.path.abspath(__file__)}")
+print(f"DEBUG: Calculated .env path: {dotenv_path}")
+retrieved_key = os.getenv('OPENAI_API_KEY')
+print(f"DEBUG: OPENAI_API_KEY (raw): '{retrieved_key}'") # Use quotes to show if it's empty
+print(f"DEBUG: OPENAI_API_KEY loaded: {bool(retrieved_key)}") # Convert to bool for clear true/false
+print(f"DEBUG: PG_USER loaded: {os.getenv('PG_USER')}")
+# --- END DEBUGGING ---
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise ValueError("OPENAI_API_KEY not found in .env file.")
+
+# ... rest of your code (database config, LLM setup, etc.) ...
 
 # --- Database Connection Configuration ---
 DB_USER = os.getenv("PG_USER", "postgres")
