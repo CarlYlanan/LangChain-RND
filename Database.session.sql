@@ -11,7 +11,7 @@ CREATE TABLE patients (
     dob DATE,
     gender VARCHAR(50),
     nhs_number VARCHAR(20) UNIQUE NOT NULL,
-    phone_number VARCHAR(50),
+    phone_number VARCHAR(50),cad
     email VARCHAR(255),
     pregnancy BOOLEAN,
 );
