@@ -106,4 +106,12 @@ Not Accepted / Return to GP
 • Out of scope
   Trigger Terms: "not urology", "refer to another specialty"
   Clinical Context: Redirect referral appropriately.
+  
+  Based on the rules provided above, please help indicate which priority the patient should we placed in 
+  Once you've scanned the pdf can you produce an output like the following format (below is an example), where 0 means no and 1 means yes:
+  Priority 1: 0 (a reasonale as to decision, 1 line maximum)
+  Priority 2: 0 (a reasonale as to decision, 1 line maximum)
+  Priority 3: 1 (a reasonale as to decision, 1 line maximum)
+  Priority 4: 0 (a reasonale as to decision, 1 line maximum)
+  Not Accepted: 0 (a reasonale as to decision, 1 line maximum)
 """
