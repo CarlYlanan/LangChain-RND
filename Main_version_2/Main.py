@@ -1,13 +1,14 @@
-from triage import triage_rules
+import json
 import openai
 from dotenv import load_dotenv
 load_dotenv()
 client = openai.OpenAI()
 
-from classifier import get_semi_and_unstructured
 from Ingester import ingesting_pdf
-import json
 from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
+from classifier import get_semi_and_unstructured
+from triage import triage_rules
+
 
 # If the file is in a subdirectory, use:
 # from .Structured_data_to_JSON_format import extract_single_text_to_json
@@ -75,13 +76,21 @@ if __name__ == "__main__":
 
     # Extract text from pdf and adding to processed_text variable
     processed_text = etl_process(sample_document_path)
-
-    print("\nStructured JSON Output:")
+        
+    # extracting key data from structured section
     structured_json_file = structured_json_process(processed_text)
+    print("\nStructured JSON Output:")
     print(structured_json_file)
+    
+    # retrieves the semi and unstructured chunks from processed text
+    semi_unstructured_chunks = get_semi_and_unstructured("\n\n".join(processed_text))
+        
+    #joining chunks into a single clean string
+    clean_text = "\n\n".join(semi_unstructured_chunks)
 
+    # parsing through clean text into triaging algorithm
     print("\nAI Triage Output:")
-    ai_triage_output = ai_triage(processed_text)
+    ai_triage_output = ai_triage(clean_text)
     print(ai_triage_output)
 
     # Printing pdf information for now
