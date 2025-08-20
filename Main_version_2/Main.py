@@ -3,6 +3,7 @@ import openai
 from dotenv import load_dotenv
 load_dotenv()
 client = openai.OpenAI()
+from hashing import hash_sensitive_info
 
 from Ingester import ingesting_pdf
 from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
@@ -83,14 +84,21 @@ if __name__ == "__main__":
     print(structured_json_file)
     
     # retrieves the semi and unstructured chunks from processed text
-    semi_unstructured_chunks = get_semi_and_unstructured("\n\n".join(processed_text))
+    #semi_unstructured_chunks = get_semi_and_unstructured("\n\n".join(processed_text))
         
     #joining chunks into a single clean string
-    clean_text = "\n\n".join(semi_unstructured_chunks)
+    #clean_text = "\n\n".join(semi_unstructured_chunks)
 
     # parsing through clean text into triaging algorithm
+    #print("\n\nProcessed Text Output:\n\n")
+    #print(processed_text)
+
+    hashed_text = hash_sensitive_info(processed_text)
+    print("\n\nHashed Text Output:\n\n")
+    print(hashed_text)
+
     print("\nAI Triage Output:")
-    ai_triage_output = ai_triage(clean_text)
+    ai_triage_output = ai_triage(hashed_text)
     print(ai_triage_output)
 
     # Printing pdf information for now
