@@ -10,16 +10,11 @@ from structured_data_to_json_format import extract_single_text_to_json, PatientD
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 
+# if the file is in a subdirectory, use:
+# from .Structured_data_to_JSON_format import extract_single_text_to_jsonpip
 
-# If the file is in a subdirectory, use:
-# from .Structured_data_to_JSON_format import extract_single_text_to_json
-
-
-def etl_process(path: str):
-    # Utilising ingesting function
-    pages = ingesting_pdf(path)
-    return pages
-
+def etl_process(folder_path: str):
+    return ingesting_pdf(folder_path)
 
 def structured_json_process(processed_text: str):
     patient_data_json_file = extract_single_text_to_json(processed_text)
@@ -72,34 +67,26 @@ Not Accepted: 0 (reason, 1 line max)
 
 
 if __name__ == "__main__":
-    # Changed Path of sample document, please tell if broken
-    sample_document_path = "Main_version_2/sample.pdf"
+    # changed path to folder
+    sample_folder_path = "sample_documents"
 
-    # Extract text from pdf and adding to processed_text variable
-    processed_text = etl_process(sample_document_path)
+    # extract text from each PDF
+    all_docs = etl_process(sample_folder_path)  # now returns list of (filename, text)
+
+
+    for file_name, processed_text in all_docs:
+        print(f"\n--- Processing: {file_name} ----------------------------------------")
+
+        # extracting key data from structured section
+        structured_json_file = structured_json_process(processed_text)
+        print("\nStructured JSON Output:")
+        print(structured_json_file)
         
-    # extracting key data from structured section
-    structured_json_file = structured_json_process(processed_text)
-    print("\nStructured JSON Output:")
-    print(structured_json_file)
-    
-    # retrieves the semi and unstructured chunks from processed text
-    #semi_unstructured_chunks = get_semi_and_unstructured("\n\n".join(processed_text))
+        # Hash sensitive info
+        hashed_text = hash_sensitive_info(processed_text)
         
-    #joining chunks into a single clean string
-    #clean_text = "\n\n".join(semi_unstructured_chunks)
+        print("\nAI Triage Output:")
+        ai_triage_output = ai_triage(hashed_text)
+        print(ai_triage_output)
 
-    # parsing through clean text into triaging algorithm
-    #print("\n\nProcessed Text Output:\n\n")
-    #print(processed_text)
 
-    hashed_text = hash_sensitive_info(processed_text)
-    print("\n\nHashed Text Output:\n\n")
-    print(hashed_text)
-
-    print("\nAI Triage Output:")
-    ai_triage_output = ai_triage(hashed_text)
-    print(ai_triage_output)
-
-    # Printing pdf information for now
-    # print(processed_text)
