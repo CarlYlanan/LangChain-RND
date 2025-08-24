@@ -5,7 +5,7 @@ load_dotenv()
 client = openai.OpenAI()
 from hashing import hash_sensitive_info
 
-from Ingester import ingesting_pdf
+from ingester import ingesting_pdf
 from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
@@ -39,6 +39,7 @@ You are a clinical triage assistant. Classify referrals strictly according to th
 {json.dumps(triage_rules, indent=2)}
 
 Based on the rules provided above, indicate the appropriate priority or Not Accepted if the referral is outside urology.
+Add a 2 sentence summary based on your decision making at the end, followed with the disclaimer below
 Add this comment at the end: Disclaimer, this response has been generated utilising ChatGPT.
 
 Output format should be exactly like this example (0 = no, 1 = yes):
