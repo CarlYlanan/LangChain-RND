@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
         # extracting key data from structured section
         structured_json_file = structured_json_process(processed_text)
-        print("\nStructured JSON Output:")
+        #print("\nStructured JSON Output:")
         print(structured_json_file)
         
         # Hash sensitive info
@@ -102,5 +102,3 @@ if __name__ == "__main__":
         
         #if feedback.strip() or final_result.strip():
         #    accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
-
-

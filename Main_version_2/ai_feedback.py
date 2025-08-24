@@ -30,10 +30,12 @@ def accepting_feedback(file_name, ai_triage_output, feedback, final_decision):
 def get_feedback_context():
     feedback_results = loading_memory()
     if not feedback_results:
+        print("No memory found.")  # <-- debug print
         return "No memory can be found."
     
     context = "Here is the latest feedback correction:\n\n"
     for fb in feedback_results[-1:]:
         context += f"- File: {fb['file_name']}, Correction: {fb['final_decision']} (Reason: {fb['feedback']})\n"
     
+    print("Memory loaded for AI:", context)  # <-- debug print
     return context
