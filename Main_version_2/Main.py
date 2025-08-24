@@ -11,6 +11,10 @@ from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from ai_feedback import loading_memory, accepting_feedback, get_feedback_context
 
+# For performance metrics
+import time
+start_time = time.time()
+
 # if the file is in a subdirectory, use:
 # from .Structured_data_to_JSON_format import extract_single_text_to_jsonpip
 
@@ -102,3 +106,7 @@ if __name__ == "__main__":
         
         #if feedback.strip() or final_result.strip():
         #    accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
+     
+    #This is for performance metrics purposes
+    end_time = time.time()
+    print(f"Total execution time: {end_time - start_time:.2f} seconds")
