@@ -1,30 +1,39 @@
 import json 
 import os 
 
-feedback_file = "feedback_memory.json"
+FEEDBACK_FILE = "feedback_memory.json"
 
 def loading_memory():
-    if os.path.exists(feedback_file):
-        with open(feedback_file, "r") as f:
-            return json.load(f)
-        return [] 
     
-def accepting_feedback(file_name, ai_output, feedback, final_decision):
+    if not os.path.exists(FEEDBACK_FILE):
+        with open(FEEDBACK_FILE, "w") as f:
+            json.dump([], f)
+        return []
+
+    if os.path.getsize(FEEDBACK_FILE) == 0:
+        return []
+    
+    with open(FEEDBACK_FILE, "r") as f:
+        return json.load(f)
+    
+def accepting_feedback(file_name, ai_triage_output, feedback, final_decision):
     data = loading_memory()
     data.append({
         "file_name": file_name, 
-        "ai_output": ai_output, 
+        "ai_triage_output": ai_triage_output, 
         "feedback": feedback, 
         "final_decision": final_decision
     })
-    with open(feedback_file, "w") as f:
-        json.dumpe(data, f, indent=2)
+    with open(FEEDBACK_FILE, "w") as f:
+        json.dump(data, f, indent=2)
 
 def get_feedback_context():
     feedback_results = loading_memory()
     if not feedback_results:
         return "No memory can be found."
-    context = "Here is the lastest feedback correction:\n\n"
+    
+    context = "Here is the latest feedback correction:\n\n"
     for fb in feedback_results[-1:]:
-        content += f"- File: {fb['file_name']}, Correction: {fb['final_label']} (Reason: {fb['feedback']})\n"
-        return context
+        context += f"- File: {fb['file_name']}, Correction: {fb['final_decision']} (Reason: {fb['feedback']})\n"
+    
+    return context

@@ -3,12 +3,13 @@ import openai
 from dotenv import load_dotenv
 load_dotenv()
 client = openai.OpenAI()
-from hashing import hash_sensitive_info
 
+from hashing import hash_sensitive_info
 from ingester import ingesting_pdf
 from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
+from ai_feedback import loading_memory, accepting_feedback, get_feedback_context
 
 # if the file is in a subdirectory, use:
 # from .Structured_data_to_JSON_format import extract_single_text_to_jsonpip
@@ -26,7 +27,8 @@ def preprocess_patient_text(patient_text: str) -> str:
     return "\n\n".join(chunks)
 
 
-def ai_triage(clean_text: str):
+def ai_triage(clean_text: str, file_name: str):
+    feedback_memory = get_feedback_context()
     
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -37,6 +39,9 @@ def ai_triage(clean_text: str):
 You are a clinical triage assistant. Classify referrals strictly according to the following triage rules:
 
 {json.dumps(triage_rules, indent=2)}
+
+You also have memory from corrections made by past clinicians. Use them if relevant:
+{feedback_memory}
 
 Based on the rules provided above, indicate the appropriate priority or Not Accepted if the referral is outside urology.
 Add a 2 sentence summary based on your decision making at the end, followed with the disclaimer below
@@ -86,8 +91,16 @@ if __name__ == "__main__":
         # Hash sensitive info
         hashed_text = hash_sensitive_info(processed_text)
         
+        # AI answer
         print("\nAI Triage Output:")
-        ai_triage_output = ai_triage(hashed_text)
+        ai_triage_output = ai_triage(hashed_text, file_name)
         print(ai_triage_output)
+        
+        # getting feedback from terminal
+        #feedback = input("Enter feedback here (or press Enter if decision was correct): ")
+        #final_result = input("Enter final result (Priority X / Not Accepted, or press Enter if same as AI): ")
+        
+        #if feedback.strip() or final_result.strip():
+        #    accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
 
 

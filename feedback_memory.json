@@ -1,0 +1,44 @@
+[
+  {
+    "file_name": "Not Accepted 1.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm identified)\nPriority 3: 1 (moderate symptoms of severe polyuria, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a case of severe polyuria, which is classified as moderate symptoms that may benefit from specialist input. There are no indications of urgent or cancer-related concerns, thus it is prioritized accordingly. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "This is a neprhology patient",
+    "final_decision": "Not Accepted"
+  },
+  {
+    "file_name": "Not Accepted 1.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms for suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm identified)\nPriority 3: 1 (moderate symptoms of severe polyuria, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a patient with severe polyuria, which falls under moderate symptoms that may benefit from specialist input, thus classified as Priority 3. There are no indications of cancer or significant risk of harm that would necessitate a higher priority classification. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "This is a nephrology patient",
+    "final_decision": "Not Accepted"
+  },
+  {
+    "file_name": "Priority 1.2.pdf",
+    "ai_triage_output": "Priority 1: 0 (reason: no suspected cancer symptoms present)\nPriority 2: 0 (reason: not applicable as this is a plastic surgery referral)\nPriority 3: 0 (reason: not applicable as this is a plastic surgery referral)\nPriority 4: 0 (reason: not applicable as this is a plastic surgery referral)\nNot Accepted: 1 (reason: this is a referral for plastic surgery, not urology)\n\nThis referral is classified as Not Accepted because it pertains to a plastic surgery case involving necrotising fasciitis, which is outside the scope of urology. The referral should be returned to the GP with guidance to refer to the appropriate specialty. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "the patient is already admitted and in theatre",
+    "final_decision": "Not Accepted"
+  },
+  {
+    "file_name": "Priority 2.1.pdf",
+    "ai_triage_output": "Priority 1: 0 (the patient is already admitted and in theatre)\nPriority 2: 0 (the patient is already admitted and in theatre)\nPriority 3: 0 (the patient is already admitted and in theatre)\nPriority 4: 0 (the patient is already admitted and in theatre)\nNot Accepted: 1 (the patient is already admitted and in theatre)\n\nThe referral is classified as Not Accepted because the patient is already admitted and undergoing treatment, which falls outside the scope of a new referral. Therefore, no further action is required at this time. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Severe chronic infection with a non-functioning kidney, risk of worsening sepsis if untreated, already escalated to surgery, but not an emergency admission",
+    "final_decision": "Priority 2"
+  },
+  {
+    "file_name": "Priority 3.1.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (persistent moderate LUTS with recurrent UTIs, risk of deterioration)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates significant symptoms due to recurrent urinary tract infections and persistent lower urinary tract symptoms, warranting a Priority 2 classification for timely assessment. The request for specialist opinion and potential biopsy further supports the need for prompt attention. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Persistent microscopic haematuria, LUTS, Lesions not suspicious for malignancy",
+    "final_decision": "Priority 3"
+  },
+  {
+    "file_name": "Priority 4.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms present)\nPriority 2: 0 (no significant symptoms or risk of harm)\nPriority 3: 1 (stable PSA rise, ongoing active surveillance)\nPriority 4: 0 (not a routine review, ongoing management)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates that the patient is under active surveillance for low-risk prostate cancer with stable PSA levels and no new symptoms, which aligns with Priority 3 classification. This case does not present any urgent concerns, allowing for continued monitoring without immediate intervention. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Stable PSA rise and routine surveillance",
+    "final_decision": "Priority 4"
+  },
+  {
+    "file_name": "Priority 4.1.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 1 (stable renal lesion with request for specialist opinion on long-term monitoring)\nPriority 4: 0 (not routine review as it requires specialist assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral is classified as Priority 3 due to the stable renal lesion that requires specialist input for long-term monitoring, despite the patient being asymptomatic. There are no urgent or significant symptoms that would necessitate a higher priority classification. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Incidental/stable renal cysts, benign lesions needing reassurance or surveillance, he is well, lesion is unchanged, renal function preserved",
+    "final_decision": "Priority 4"
+  }
+]
