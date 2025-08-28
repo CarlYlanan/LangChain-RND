@@ -4,8 +4,9 @@ from dotenv import load_dotenv
 load_dotenv()
 client = openai.OpenAI()
 
+
 from hashing import hash_sensitive_info
-from ingester import ingesting_pdf
+from Ingester import ingesting_pdf
 from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
