@@ -1,16 +1,29 @@
 import json
 import openai
+import os
 from dotenv import load_dotenv
-load_dotenv()
-client = openai.OpenAI()
-
-
 from hashing import hash_sensitive_info
 from Ingester import ingesting_pdf
 from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
+from sqlalchemy import create_engine
 from ai_feedback import loading_memory, accepting_feedback, get_feedback_context
+from models import Base, ReferralTriageResult
+
+
+load_dotenv()
+client = openai.OpenAI()
+
+def init_db():
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    if not DATABASE_URL:
+        raise ValueError("DATABASE_URL not set in environment.")
+    
+    engine = create_engine(DATABASE_URL)
+    Base.metadata.create_all(engine)
+    print("Table `referral_triage_results` has been created or already exists.")
+
 
 # For performance metrics
 import time
@@ -29,7 +42,7 @@ def structured_json_process(processed_text: str):
 
 def preprocess_patient_text(patient_text: str) -> str:
     chunks = get_semi_and_unstructured(patient_text)
-    return "\n\n".join(chunks)
+    return "\n\n".join(chunks)  
 
 
 def ai_triage(clean_text: str, file_name: str):
@@ -78,6 +91,7 @@ Not Accepted: 0 (reason, 1 line max)
 
 
 if __name__ == "__main__":
+    init_db()
     # changed path to folder
     sample_folder_path = "sample_documents"
 
@@ -100,6 +114,7 @@ if __name__ == "__main__":
         print("\nAI Triage Output:")
         ai_triage_output = ai_triage(hashed_text, file_name)
         print(ai_triage_output)
+        
         
         # getting feedback from terminal
         #feedback = input("Enter feedback here (or press Enter if decision was correct): ")
