@@ -4,13 +4,15 @@ import os
 from dotenv import load_dotenv
 from hashing import hash_sensitive_info
 from Ingester import ingesting_pdf
-from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
+#from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from sqlalchemy import create_engine
 from ai_feedback import loading_memory, accepting_feedback, get_feedback_context
 from models import Base, ReferralTriageResult
 
+from structured_json_to_table import extract_data_from_text
+from structured_json_to_table import add_data_to_db
 
 load_dotenv()
 client = openai.OpenAI()
@@ -35,9 +37,18 @@ start_time = time.time()
 def etl_process(folder_path: str):
     return ingesting_pdf(folder_path)
 
-def structured_json_process(processed_text: str):
-    patient_data_json_file = extract_single_text_to_json(processed_text)
-    return patient_data_json_file
+# Change the function to accept both the text and the filename
+def structured_json_process(processed_text: str, source_filename: str):
+
+    # This now correctly receives only one item (the dictionary)
+    extracted_data = extract_data_from_text(processed_text)
+    
+    # This function call is now correct
+    add_data_to_db(extracted_data, source_filename)
+    
+    return (extracted_data, source_filename)
+    
+    
 
 
 def preprocess_patient_text(patient_text: str) -> str:
@@ -103,7 +114,7 @@ if __name__ == "__main__":
         print(f"\n--- Processing: {file_name} ----------------------------------------")
 
         # extracting key data from structured section
-        structured_json_file = structured_json_process(processed_text)
+        structured_json_file = structured_json_process(processed_text, file_name)
         #print("\nStructured JSON Output:")
         print(structured_json_file)
         
