@@ -22,18 +22,39 @@ prompt = PromptTemplate.from_template(
 
 Only reply with: structured, semi-structured, or unstructured.
 
+Examples:
+---
 Text:
-{text}"""
+"Patient Name: Tom Linacre
+NHS number: 789123456
+Contact type: First appointment "
+-> structured
+
+Text:
+"Patient presents with recurrent UTI symptoms. Prior labs suggest ongoing infection..."
+-> unstructured
+
+Text:
+"History: Chronic kidney pain. Treatment: Reviewed CT scans. Advised surgery."
+-> semi-structured
+---
+Text:
+{text}
+→"""
 )
 
 classifier_chain = prompt | llm
 
-def classify_chunk(chunk: str) -> str:
+def classify_chunk(chunk: str, verbose=False) -> str:
     """Use OpenAI to classify a paragraph/chunk of text."""
     response = classifier_chain.invoke({"text": chunk})
     label = response.content.strip().lower()
-    print(f"\n🔹 Classified as: {label}\n🔸 Preview: {chunk[:150]}...\n")
+
+    if verbose:
+        print(f"\nClassified as: {label}\n Preview: {chunk[:150]}...\n")
+
     return label
+
 
 def split_into_chunks(text: str, min_words=1) -> list:
     """Split full document into paragraph-like chunks using blank lines."""
@@ -74,9 +95,9 @@ def split_document_sections_by_chunks(text: str):
     chunks = split_into_chunks(text)
     for chunk in chunks:
         label = classify_chunk(chunk)
-        print("CHUNK START >>>")
-        print(chunk)
-        print("<<< CHUNK END\n")
+        #print("CHUNK START >>>")
+        #print(chunk)
+        #print("<<< CHUNK END\n")
 
         if "structured" in label and "semi" not in label and "un" not in label:
             structured.append(clean_structured_chunk(chunk))
@@ -118,9 +139,39 @@ def run_classification_pipeline(text: str):
 
 def get_semi_and_unstructured(text: str):
     """
-    Returns only semi-structured and unstructured chunks.
-    Use this when sending to grading algorithm.
+    Returns semi-structured and unstructured chunks,
+    plus any structured chunks that mention DOB (which are important for triage).
+
+    Includes optional preview code that can be enabled for debugging or client review.
     """
     sections = split_document_sections_by_chunks(text)
-    return sections["semi_structured"] + sections["unstructured"]
 
+    semi = sections["semi_structured"]
+    unstructured = sections["unstructured"]
+
+    '''
+
+    # Print full chunks for client validation, uncomment if needed
+    
+    print("\n=== FULL EXTRACTED TEXT ===")
+
+    
+    #if dob_lines:
+    #   print("\n--- Structured with DOB ---")
+     #   for i, line in enumerate(dob_lines, 1):
+      #      print(f"\n[{i}] {line}")
+    
+
+    if semi:
+        print("\n--- Semi-Structured ---")
+        for i, chunk in enumerate(semi, 1):
+            print(f"\n[{i}] {chunk}")
+
+    if unstructured:
+        print("\n--- Unstructured ---")
+        for i, chunk in enumerate(unstructured, 1):
+            print(f"\n[{i}] {chunk}")
+    
+    '''
+    return semi + unstructured
+    

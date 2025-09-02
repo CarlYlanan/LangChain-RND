@@ -42,7 +42,8 @@ def structured_json_process(processed_text: str, source_filename: str):
 
     # This now correctly receives only one item (the dictionary)
     extracted_data = extract_data_from_text(processed_text)
-    
+
+   
     # This function call is now correct
     add_data_to_db(extracted_data, source_filename)
     
@@ -56,8 +57,10 @@ def preprocess_patient_text(patient_text: str) -> str:
     return "\n\n".join(chunks)  
 
 
-def ai_triage(clean_text: str, file_name: str):
+def ai_triage(clean_text: str, file_name: str, dob: str=None):
     feedback_memory = get_feedback_context()
+
+    dob_text = f"Date of Birth: {dob}\n" if dob else ""
     
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -88,7 +91,7 @@ Not Accepted: 0 (reason, 1 line max)
                 "role": "user",
                 "content": f"""
     Patient referral details:
-    {clean_text}
+    {dob_text}{clean_text}
 
     Classify this referral strictly following the rules above. Provide output exactly.
     """
@@ -114,17 +117,26 @@ if __name__ == "__main__":
         print(f"\n--- Processing: {file_name} ----------------------------------------")
 
         # extracting key data from structured section
-        structured_json_file = structured_json_process(processed_text, file_name)
+        structured_json_file, _ = structured_json_process(processed_text, file_name)
         #print("\nStructured JSON Output:")
         print(structured_json_file)
-        
+
+        # Extarct the date of birth value from the structured_json_file dictionary so it can be passed later on in the triaging
+        dob = structured_json_file.get("Date of Birth") or structured_json_file.get("DOB") or structured_json_file.get("dob")
+      
         # Hash sensitive info
         hashed_text = hash_sensitive_info(processed_text)
+
+        # Extract semi structured and unstructured chunks from the hashed text
+        semi_and_unstructured_chunks = get_semi_and_unstructured(hashed_text)
+        semi_unstructured_text = "\n\n".join(semi_and_unstructured_chunks) #combines semi structured and unstructured chunks into one full text
         
         # AI answer
         print("\nAI Triage Output:")
-        ai_triage_output = ai_triage(hashed_text, file_name)
-        print(ai_triage_output)
+        ai_triage_output = ai_triage(semi_unstructured_text, file_name, dob=dob)
+        print(ai_triage_output) 
+
+
         
         
         # getting feedback from terminal
@@ -137,3 +149,5 @@ if __name__ == "__main__":
     #This is for performance metrics purposes
     end_time = time.time()
     print(f"Total execution time: {end_time - start_time:.2f} seconds")
+
+   
