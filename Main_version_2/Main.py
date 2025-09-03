@@ -3,20 +3,21 @@ import openai
 import os
 from dotenv import load_dotenv
 from hashing import hash_sensitive_info
-from Ingester import ingesting_pdf
-#from structured_data_to_json_format import extract_single_text_to_json, PatientDemographics
+from ingester import ingesting_pdf
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from sqlalchemy import create_engine
 from ai_feedback import loading_memory, accepting_feedback, get_feedback_context
 from models import Base, ReferralTriageResult
-
 from structured_json_to_table import extract_data_from_text
 from structured_json_to_table import add_data_to_db
 
+# Loading .env file
 load_dotenv()
+# Initialising client object to interact with OpenAI API
 client = openai.OpenAI()
 
+# Initialise referral_triage_results database
 def init_db():
     DATABASE_URL = os.getenv("DATABASE_URL")
     if not DATABASE_URL:
@@ -26,19 +27,16 @@ def init_db():
     Base.metadata.create_all(engine)
     print("Table `referral_triage_results` has been created or already exists.")
 
-
-# For performance metrics
+# Starting time to measure performance metrics
 import time
 start_time = time.time()
 
-# if the file is in a subdirectory, use:
-# from .Structured_data_to_JSON_format import extract_single_text_to_jsonpip
-
-def etl_process(folder_path: str):
+# Function to ingest the referral pdfs 
+def referral_ingestion(folder_path: str):
     return ingesting_pdf(folder_path)
 
-# Change the function to accept both the text and the filename
-def structured_json_process(processed_text: str, source_filename: str):
+# Function that extracts personal details and adds them into our database table
+def personal_info_insertion_to_db(processed_text: str, source_filename: str):
 
     # This now correctly receives only one item (the dictionary)
     extracted_data = extract_data_from_text(processed_text)
@@ -48,15 +46,14 @@ def structured_json_process(processed_text: str, source_filename: str):
     add_data_to_db(extracted_data, source_filename)
     
     return (extracted_data, source_filename)
-    
-    
 
-
+# Classifying pdf into sections
+# Excluding personal details from referrals
 def preprocess_patient_text(patient_text: str) -> str:
     chunks = get_semi_and_unstructured(patient_text)
     return "\n\n".join(chunks)  
 
-
+# Passing triaging rules and referrals to AI to provide priority decisions
 def ai_triage(clean_text: str, file_name: str, dob: str=None):
     feedback_memory = get_feedback_context()
 
@@ -103,41 +100,37 @@ Not Accepted: 0 (reason, 1 line max)
 
     return response.choices[0].message.content
 
-
 if __name__ == "__main__":
+    
+    # Initialising database
     init_db()
-    # changed path to folder
+    
+    # Path to folder containing clinical referrals
     sample_folder_path = "sample_documents"
 
-    # extract text from each PDF
-    all_docs = etl_process(sample_folder_path)  # now returns list of (filename, text)
-
+    # Ingesting documents and extracting all contents from each pdf 
+    all_docs = referral_ingestion(sample_folder_path)
 
     for file_name, processed_text in all_docs:
         print(f"\n--- Processing: {file_name} ----------------------------------------")
 
-        # extracting key data from structured section
-        structured_json_file, _ = structured_json_process(processed_text, file_name)
-        #print("\nStructured JSON Output:")
-        print(structured_json_file)
+        # Extracting personal information from structured section of pdf
+        structured_json_file, _ = personal_info_insertion_to_db(processed_text, file_name)
 
-        # Extarct the date of birth value from the structured_json_file dictionary so it can be passed later on in the triaging
+        # Extract the DOB from the structured_json_file dictionary for later use in AI triaging algorithm 
         dob = structured_json_file.get("Date of Birth") or structured_json_file.get("DOB") or structured_json_file.get("dob")
       
         # Hash sensitive info
         hashed_text = hash_sensitive_info(processed_text)
 
-        # Extract semi structured and unstructured chunks from the hashed text
+        # Classifying pdfs by extracting semi-structured and unstructured chunks from the hashed text
         semi_and_unstructured_chunks = get_semi_and_unstructured(hashed_text)
-        semi_unstructured_text = "\n\n".join(semi_and_unstructured_chunks) #combines semi structured and unstructured chunks into one full text
+        semi_unstructured_text = "\n\n".join(semi_and_unstructured_chunks) #combines semi-structured and unstructured chunks into one full text
         
-        # AI answer
+        # Passing information to our AI triaging algorithm
         print("\nAI Triage Output:")
         ai_triage_output = ai_triage(semi_unstructured_text, file_name, dob=dob)
         print(ai_triage_output) 
-
-
-        
         
         # getting feedback from terminal
         #feedback = input("Enter feedback here (or press Enter if decision was correct): ")
@@ -146,7 +139,7 @@ if __name__ == "__main__":
         #if feedback.strip() or final_result.strip():
         #    accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
      
-    #This is for performance metrics purposes
+    # Stopping timer for performance metrics
     end_time = time.time()
     print(f"Total execution time: {end_time - start_time:.2f} seconds")
 
