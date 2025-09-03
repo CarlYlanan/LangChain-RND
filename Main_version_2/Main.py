@@ -3,7 +3,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from hashing import hash_sensitive_info
-from ingester import ingesting_pdf
+from Ingester import ingesting_pdf
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from sqlalchemy import create_engine
@@ -17,7 +17,7 @@ load_dotenv()
 # Initialising client object to interact with OpenAI API
 client = openai.OpenAI()
 
-# Initialise referral_triage_results database
+# Initialise referral_triage_results database   
 def init_db():
     DATABASE_URL = os.getenv("DATABASE_URL")
     if not DATABASE_URL:
@@ -114,10 +114,9 @@ Not Accepted: 0 (reason, one line max)
     return response.choices[0].message.content
 
 if __name__ == "__main__":
-    
-    # Initialising database
-    init_db()
-    
+    # Skipping database init
+    # init_db()
+
     # Path to folder containing clinical referrals
     sample_folder_path = "sample_documents"
 
@@ -127,33 +126,31 @@ if __name__ == "__main__":
     for file_name, processed_text in all_docs:
         print(f"\n--- Processing: {file_name} ----------------------------------------")
 
-        # Extracting personal information from structured section of pdf
-        structured_json_file, _ = personal_info_insertion_to_db(processed_text, file_name)
+        # Instead of inserting to DB, just simulate extracted personal info
+        structured_json_file = {
+            "Name": "Dummy Name",
+            "Date of Birth": "01/01/1970"
+        }
+        dob = structured_json_file.get("Date of Birth")
+        print("\Processed")
+        print(processed_text)
 
-        # Extract the DOB from the structured_json_file dictionary for later use in AI triaging algorithm 
-        dob = structured_json_file.get("Date of Birth") or structured_json_file.get("DOB") or structured_json_file.get("dob")
-      
         # Hash sensitive info
         hashed_text = hash_sensitive_info(processed_text)
+        print("\n\nHashed Text:")
+        print(hashed_text)
+
+
 
         # Classifying pdfs by extracting semi-structured and unstructured chunks from the hashed text
         semi_and_unstructured_chunks = get_semi_and_unstructured(hashed_text)
-        semi_unstructured_text = "\n\n".join(semi_and_unstructured_chunks) #combines semi-structured and unstructured chunks into one full text
-        
+        semi_unstructured_text = "\n\n".join(semi_and_unstructured_chunks)
+
         # Passing information to our AI triaging algorithm
-        print("\nAI Triage Output:")
+        #print("\nAI Triage Output:")
         ai_triage_output = ai_triage(semi_unstructured_text, file_name, dob=dob)
-        print(ai_triage_output) 
-        
-        # getting feedback from terminal
-        #feedback = input("Enter feedback here (or press Enter if decision was correct): ")
-        #final_result = input("Enter final result (Priority X / Not Accepted, or press Enter if same as AI): ")
-        
-        #if feedback.strip() or final_result.strip():
-        #    accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
-     
+        #print(ai_triage_output)
+
     # Stopping timer for performance metrics
     end_time = time.time()
     print(f"Total execution time: {end_time - start_time:.2f} seconds")
-
-   
