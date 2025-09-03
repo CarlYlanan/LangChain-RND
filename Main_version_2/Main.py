@@ -7,7 +7,7 @@ from ingester import ingesting_pdf
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from sqlalchemy import create_engine
-from ai_feedback import loading_memory, accepting_feedback, get_feedback_context
+from ai_feedback import loading_memory, accepting_feedback, build_feedback_examples
 from models import Base, ReferralTriageResult
 from structured_json_to_table import extract_data_from_text
 from structured_json_to_table import add_data_to_db
@@ -25,7 +25,7 @@ def init_db():
     
     engine = create_engine(DATABASE_URL)
     Base.metadata.create_all(engine)
-    print("Table `referral_triage_results` has been created or already exists.")
+    #print("Table `referral_triage_results` has been created or already exists.")
 
 # Starting time to measure performance metrics
 import time
@@ -55,10 +55,16 @@ def preprocess_patient_text(patient_text: str) -> str:
 
 # Passing triaging rules and referrals to AI to provide priority decisions
 def ai_triage(clean_text: str, file_name: str, dob: str=None):
-    feedback_memory = get_feedback_context()
+    # loading in memory from feedback_memory.json
+    feedback_memory_data = loading_memory()
+    
+    # Building examples from feedback memory for the AI to properly understand
+    feedback_examples = build_feedback_examples(feedback_memory_data)
 
+    # Getting the age of the patient
     dob_text = f"Date of Birth: {dob}\n" if dob else ""
     
+    # Call the OpenAI chat model to classify the referral
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -69,19 +75,26 @@ You are a clinical triage assistant. Classify referrals strictly according to th
 
 {json.dumps(triage_rules, indent=2)}
 
-You also have memory from corrections made by past clinicians. Use them if relevant:
-{feedback_memory}
+Here are previous cases with corrections from clinicians:
+{feedback_examples}
+
+CRITICAL: Follow this decision process:
+1. FIRST: Is this actually urology? (If other specialty mentioned → Not Accepted)
+2. SECOND: What's the urgency level?
+3. THIRD: Check against learned patterns above
+
+IMPORTANT: If past feedback indicates that similar symptoms or cases were outside urology, classify accordingly as Not Accepted, even if the symptoms are moderate.
 
 Based on the rules provided above, indicate the appropriate priority or Not Accepted if the referral is outside urology.
 Add a 2 sentence summary based on your decision making at the end, followed with the disclaimer below
 Add this comment at the end: Disclaimer, this response has been generated utilising ChatGPT.
 
 Output format should be exactly like this example (0 = no, 1 = yes):
-Priority 1: 0 (reason, 1 line max)
-Priority 2: 0 (reason, 1 line max)
-Priority 3: 1 (reason, 1 line max)
-Priority 4: 0 (reason, 1 line max)
-Not Accepted: 0 (reason, 1 line max)
+Priority 1: 0 (reason, one line max)
+Priority 2: 0 (reason, one line max)
+Priority 3: 1 (reason, one line max)
+Priority 4: 0 (reason, one line max)
+Not Accepted: 0 (reason, one line max)
 """
             },
             {

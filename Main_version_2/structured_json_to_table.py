@@ -30,8 +30,8 @@ def add_data_to_db(extracted_data: dict, source_filename: str):
     Takes a dictionary of extracted data and dynamically builds an INSERT statement
     to add it to the database.
     """
-    print("--- Extracted Information ---")
-    print(json.dumps(extracted_data, indent=2))
+    #print("--- Extracted Information ---")
+    #print(json.dumps(extracted_data, indent=2))
 
     # 1. Connect to the Database
     DATABASE_URL = os.getenv("DATABASE_URL")
@@ -70,8 +70,8 @@ def add_data_to_db(extracted_data: dict, source_filename: str):
         with engine.connect() as connection:
             connection.execute(sql_insert_query, final_data_to_insert)
             connection.commit()
-        print("\n--- Database Update ---")
-        print(f"Successfully inserted data for {source_filename}.")
+        #print("\n--- Database Update ---")
+        #print(f"Successfully inserted data for {source_filename}.")
     except Exception as e:
         print(f"\nAn error occurred: {e}")
 
