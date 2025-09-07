@@ -1,0 +1,44 @@
+[
+  {
+    "file_name": "Not Accepted 1.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm identified)\nPriority 3: 1 (moderate symptoms of severe polyuria, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a case of severe polyuria, which is classified as moderate symptoms that may benefit from specialist input. There are no indications of urgent or cancer-related concerns, thus it is prioritized accordingly. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "The symptoms are real and severe, but they are due to a nephrology problem (Lithium-induced nephrogenic DI), not urology",
+    "final_decision": "Not Accepted: 1"
+  },
+  {
+    "file_name": "Priority 1.1.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 1 (stable PSA rise with mild LUTS, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a stable PSA rise and mild lower urinary tract symptoms, which suggests the need for further evaluation but does not present urgent concerns. Therefore, it is classified as Priority 3 for non-urgent specialist evaluation. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Because raised PSA (6.8 ng/mL) and abnormal prostate findings suggest possible malignancy, this referral should be classified as Priority 1 for timely TRUS biopsy, even if LUTS are mild and there is no haematuria.",
+    "final_decision": "Priority 1: 1"
+  },
+  {
+    "file_name": "Priority 1.2.pdf",
+    "ai_triage_output": "Priority 1: 0 (reason: no suspected cancer symptoms present)\nPriority 2: 0 (reason: not applicable as this is a plastic surgery referral)\nPriority 3: 0 (reason: not applicable as this is a plastic surgery referral)\nPriority 4: 0 (reason: not applicable as this is a plastic surgery referral)\nNot Accepted: 1 (reason: this is a referral for plastic surgery, not urology)\n\nThis referral is classified as Not Accepted because it pertains to a plastic surgery case involving necrotising fasciitis, which is outside the scope of urology. The referral should be returned to the GP with guidance to refer to the appropriate specialty. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Because Fournier’s gangrene is a rapidly progressive, life-threatening urological emergency requiring immediate surgical intervention, it must be triaged as Priority 1.",
+    "final_decision": "Priority 1: 1"
+  },
+  {
+    "file_name": "Priority 2.1.pdf",
+    "ai_triage_output": "Priority 1: 0 (the patient is already admitted and in theatre)\nPriority 2: 0 (the patient is already admitted and in theatre)\nPriority 3: 0 (the patient is already admitted and in theatre)\nPriority 4: 0 (the patient is already admitted and in theatre)\nNot Accepted: 1 (the patient is already admitted and in theatre)\n\nThe referral is classified as Not Accepted because the patient is already admitted and undergoing treatment, which falls outside the scope of a new referral. Therefore, no further action is required at this time. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Because Xanthogranulomatous Pyelonephritis with staghorn calculus represents a severe, destructive infection with significant risk of sepsis and renal deterioration, it is triaged as Priority 2.",
+    "final_decision": "Priority 2: 1"
+  },
+  {
+    "file_name": "Priority 3.1.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (persistent moderate LUTS with recurrent UTIs, risk of deterioration)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates significant symptoms due to recurrent urinary tract infections and persistent lower urinary tract symptoms, warranting a Priority 2 classification for timely assessment. The request for specialist opinion and potential biopsy further supports the need for prompt attention. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "the patient presents with persistent microscopic haematuria and moderate lower urinary tract symptoms, along with atypical but non-suspicious bladder lesions, the case is classified as Priority 3 for non-urgent specialist evaluation.",
+    "final_decision": "Priority 3: 1"
+  },
+  {
+    "file_name": "Priority 4.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms present)\nPriority 2: 0 (no significant symptoms or risk of harm)\nPriority 3: 1 (stable PSA rise, ongoing active surveillance)\nPriority 4: 0 (not a routine review, ongoing management)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates that the patient is under active surveillance for low-risk prostate cancer with stable PSA levels and no new symptoms, which aligns with Priority 3 classification. This case does not present any urgent concerns, allowing for continued monitoring without immediate intervention. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "the patient has low-risk prostate cancer under active surveillance, is asymptomatic, and shows no changes on PSA or MRI, this referral fits Priority 4 for routine monitoring",
+    "final_decision": "Priority 4: 1"
+  },
+  {
+    "file_name": "Priority 4.1.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 1 (stable renal lesion with request for specialist opinion on long-term monitoring)\nPriority 4: 0 (not routine review as it requires specialist assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral is classified as Priority 3 due to the stable renal lesion that requires specialist input for long-term monitoring, despite the patient being asymptomatic. There are no urgent or significant symptoms that would necessitate a higher priority classification. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "the patient has an incidental, asymptomatic, and radiologically stable renal lesion (likely angiomyolipoma) with normal renal function, this referral fits Priority 4 for routine specialist monitoring and reassurance",
+    "final_decision": "Priority 4: 1"
+  }
+]

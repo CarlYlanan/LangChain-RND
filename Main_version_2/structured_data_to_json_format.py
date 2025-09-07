@@ -38,7 +38,7 @@ def extract_single_text_to_json(input_text: str, output_file: str = "patient_dat
         json.dump(last_response, f, indent=4)
 
     # Print the saved JSON
-    print("Saved JSON content:")
-    print(json.dumps(last_response, indent=4))
+    #print("Saved JSON content:")
+    #print(json.dumps(last_response, indent=4))
 
     return last_response
