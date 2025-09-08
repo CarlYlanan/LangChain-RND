@@ -9,8 +9,7 @@ from triage import triage_rules
 from sqlalchemy import create_engine
 from ai_feedback import loading_memory, accepting_feedback, build_feedback_examples
 from models import Base, ReferralTriageResult
-from structured_json_to_table import extract_data_from_text
-from structured_json_to_table import add_data_to_db
+from patient_details_to_db import extract_data_from_text, add_data_to_db
 
 # Loading .env file
 load_dotenv()
