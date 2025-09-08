@@ -2,7 +2,7 @@
   {
     "file_name": "Not Accepted 1.0.pdf",
     "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm identified)\nPriority 3: 1 (moderate symptoms of severe polyuria, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a case of severe polyuria, which is classified as moderate symptoms that may benefit from specialist input. There are no indications of urgent or cancer-related concerns, thus it is prioritized accordingly. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
-    "feedback": "The symptoms are real and severe, but they are due to a nephrology problem (Lithium-induced nephrogenic DI), not urology",
+    "feedback": "The referral is considered “Not Accepted” rather than Priority 3 because the patient’s polyuria is not primarily a urological issue and can be managed in primary care or by another specialty",
     "final_decision": "Not Accepted: 1"
   },
   {
@@ -18,15 +18,21 @@
     "final_decision": "Priority 1: 1"
   },
   {
+    "file_name": "Priority 1.3.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (persistent moderate LUTS with atypical bladder lesions and recurrent UTIs)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates persistent moderate lower urinary tract symptoms and atypical bladder lesions, which warrant timely assessment due to the potential risk of harm. Therefore, it is classified as Priority 2 for further evaluation and management. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "The patient has atypical bladder lesions and persistent non-visible haematuria, which are considered red-flag features raising suspicion of urological malignancy",
+    "final_decision": "Priority 1: 1"
+  },
+  {
     "file_name": "Priority 2.1.pdf",
     "ai_triage_output": "Priority 1: 0 (the patient is already admitted and in theatre)\nPriority 2: 0 (the patient is already admitted and in theatre)\nPriority 3: 0 (the patient is already admitted and in theatre)\nPriority 4: 0 (the patient is already admitted and in theatre)\nNot Accepted: 1 (the patient is already admitted and in theatre)\n\nThe referral is classified as Not Accepted because the patient is already admitted and undergoing treatment, which falls outside the scope of a new referral. Therefore, no further action is required at this time. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
     "feedback": "Because Xanthogranulomatous Pyelonephritis with staghorn calculus represents a severe, destructive infection with significant risk of sepsis and renal deterioration, it is triaged as Priority 2.",
     "final_decision": "Priority 2: 1"
   },
   {
-    "file_name": "Priority 3.1.pdf",
-    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (persistent moderate LUTS with recurrent UTIs, risk of deterioration)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates significant symptoms due to recurrent urinary tract infections and persistent lower urinary tract symptoms, warranting a Priority 2 classification for timely assessment. The request for specialist opinion and potential biopsy further supports the need for prompt attention. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
-    "feedback": "the patient presents with persistent microscopic haematuria and moderate lower urinary tract symptoms, along with atypical but non-suspicious bladder lesions, the case is classified as Priority 3 for non-urgent specialist evaluation.",
+    "file_name": "Priority 3.3.pdf",
+    "ai_triage_output": "Priority 1: 1 (rising PSA and tender prostate raise concern for possible malignancy)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as there is a potential risk of serious pathology)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a rising PSA level and a tender prostate, which are concerning for potential malignancy, warranting a Priority 1 classification for timely assessment. The patient's chronic symptoms and the need for further evaluation align with the urgency of suspected cancer. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "This referral is Priority 3 rather than Priority 1 because, although the patient has moderate symptoms and a mildly rising PSA, there are no red-flag features such as a palpable nodule, gross haematuria, or suspected cancer, so it is considered non-urgent and suitable for routine specialist assessment rather than urgent evaluation.",
     "final_decision": "Priority 3: 1"
   },
   {
@@ -42,21 +48,9 @@
     "final_decision": "Priority 4: 1"
   },
   {
-    "file_name": "Priority 2.2.pdf",
-    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (progressive lower urinary tract symptoms with rising PSA and renal imaging findings)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates significant symptoms due to progressive lower urinary tract issues and a rising PSA level, which necessitates timely assessment to prevent further deterioration. Therefore, it is classified as Priority 2 for prompt evaluation. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
-    "feedback": "The \"fullness in the collecting system\" and the \"slight impairment in his kidney function\" are the most significant red flags. They align directly with the Priority 2 rationale of \"Risk of deterioration or hospitalisation\" and the example of \"Obstructive uropathy.\" This is a functional problem that needs to be addressed to prevent potential kidney damage.",
-    "final_decision": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (progressive lower urinary tract symptoms with rising PSA and renal imaging findings)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates significant symptoms due to progressive lower urinary tract issues and a rising PSA level, which necessitates timely assessment to prevent further deterioration. Therefore, it is classified as Priority 2 for prompt evaluation. \n\nDisclaimer, this response has been generated utilising ChatGPT."
-  },
-  {
-    "file_name": "Priority 3.1.pdf",
-    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (persistent moderate LUTS with recurrent UTIs, risk of deterioration)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates significant symptoms due to recurrent urinary tract infections and persistent lower urinary tract symptoms, warranting a Priority 2 classification for timely assessment. The request for specialist opinion and potential biopsy further supports the need for prompt attention. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
-    "feedback": "Incorrect. The presence of atypical bladder lesions that require a biopsy to definitively rule out cancer constitutes a 'suspected malignancy'. This is a Priority 1 red flag, regardless of the radiologist's opinion on likelihood.",
-    "final_decision": "Priority 1"
-  },
-  {
     "file_name": "Priority 3.2.pdf",
     "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (persistent moderate LUTS with impact on quality of life)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates persistent moderate lower urinary tract symptoms that are affecting the patient's quality of life, warranting a Priority 2 classification for timely assessment. There are no indications of urgent or cancer-related concerns, thus it is prioritized accordingly. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
     "feedback": "Incorrect classification. The AI has mistakenly escalated to Priority 2. The rules require 'Recurrent urinary retention' for Priority 2; this patient had a 'single, isolated incident' that resolved spontaneously. The patient's actual symptoms are 'Moderate LUTS' and 'Erectile Dysfunction', which are clear indicators for Priority 3.\"",
-    "final_decision": "Priority 3"
+    "final_decision": "Priority 3: 1"
   }
 ]

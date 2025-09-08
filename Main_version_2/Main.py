@@ -3,7 +3,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from hashing import hash_sensitive_info
-from Ingester import ingesting_pdf
+from ingester import ingesting_pdf
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from sqlalchemy import create_engine
@@ -132,15 +132,13 @@ if __name__ == "__main__":
             "Date of Birth": "01/01/1970"
         }
         dob = structured_json_file.get("Date of Birth")
-        print("\Processed")
-        print(processed_text)
+        #print("\Processed")
+        #print(processed_text)
 
         # Hash sensitive info
         hashed_text = hash_sensitive_info(processed_text)
-        print("\n\nHashed Text:")
-        print(hashed_text)
-
-
+        #print("\n\nHashed Text:")
+        #print(hashed_text)
 
         # Classifying pdfs by extracting semi-structured and unstructured chunks from the hashed text
         semi_and_unstructured_chunks = get_semi_and_unstructured(hashed_text)
