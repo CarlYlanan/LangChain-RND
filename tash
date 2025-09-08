@@ -1,0 +1,64 @@
+[1mdiff --git a/Main_version_2/models.py b/Main_version_2/models.py[m
+[1mindex 06faa11..1142aff 100644[m
+[1m--- a/Main_version_2/models.py[m
+[1m+++ b/Main_version_2/models.py[m
+[36m@@ -1,17 +1,48 @@[m
+[31m-from sqlalchemy.ext.declarative import declarative_base[m
+[31m-from sqlalchemy import Column, Integer, String, Date[m
+[32m+[m[32mfrom sqlalchemy.orm import declarative_base[m
+[32m+[m[32mfrom sqlalchemy import Column, Integer, Text, Date[m
+ [m
+[32m+[m[32m# The declarative_base() function is now imported from sqlalchemy.orm to create a base class.[m
+ Base = declarative_base()[m
+ [m
+ class ReferralTriageResult(Base):[m
+[32m+[m[32m    """[m
+[32m+[m[32m    Represents a single record in the 'referral_triage_results' table.[m
+[32m+[m[41m    [m
+[32m+[m[32m    This class maps the table's columns to Python attributes.[m
+[32m+[m[32m    """[m
+     __tablename__ = 'referral_triage_results'[m
+ [m
+[32m+[m[32m    # --- Column Definitions ---[m
+[32m+[m[32m    # The order of columns has been updated to match the SQL table for clarity.[m
+[32m+[m[41m    [m
+[32m+[m[32m    # patient_id: Corresponds to `SERIAL PRIMARY KEY`. It's an auto-incrementing integer.[m
+     patient_id = Column(Integer, primary_key=True, autoincrement=True)[m
+[31m-    patient_name = Column(String, nullable=False)[m
+[31m-    dob = Column(Date, nullable=False)[m
+[31m-    nhs_number = Column(String, nullable=False)[m
+[31m-    hospital_id = Column(String, nullable=False)[m
+[31m-    fake_name = Column(String, nullable=False)[m
+[31m-    source_file = Column(String, nullable=False)[m
+[31m-    result = Column(String, nullable=False)[m
+[31m-    rationale = Column(String, nullable=False)[m
+\ No newline at end of file[m
+[32m+[m[41m    [m
+[32m+[m[32m    # patient_name: Corresponds to `TEXT NOT NULL`.[m
+[32m+[m[32m    patient_name = Column(Text, nullable=False)[m
+[32m+[m[41m    [m
+[32m+[m[32m    # source_file: Corresponds to `TEXT NOT NULL`.[m
+[32m+[m[32m    source_file = Column(Text, nullable=False)[m
+[32m+[m[41m    [m
+[32m+[m[32m    # dob: Corresponds to `DATE`. It is nullable (can be empty).[m
+[32m+[m[32m    dob = Column(Date, nullable=True)[m
+[32m+[m[41m    [m
+[32m+[m[32m    # nhs_number: Corresponds to `TEXT`. It is nullable.[m
+[32m+[m[32m    nhs_number = Column(Text, nullable=True)[m
+[32m+[m[41m    [m
+[32m+[m[32m    # hospital_id: Corresponds to `TEXT`. It is nullable.[m
+[32m+[m[32m    hospital_id = Column(Text, nullable=True)[m
+[32m+[m[41m    [m
+[32m+[m[32m    # fake_name: Corresponds to `TEXT DEFAULT ''`.[m[41m [m
+[32m+[m[32m    # The `server_default` tells the database to handle the default value.[m
+[32m+[m[32m    fake_name = Column(Text, server_default='')[m
+[32m+[m[41m    [m
+[32m+[m[32m    # result: Corresponds to `TEXT DEFAULT 'Pending Triage'`.[m
+[32m+[m[32m    result = Column(Text, server_default='Pending Triage')[m
+[32m+[m[41m    [m
+[32m+[m[32m    # rationale: Corresponds to `TEXT DEFAULT ''`.[m
+[32m+[m[32m    rationale = Column(Text, server_default='')[m
+[32m+[m
+[32m+[m[32m    def __repr__(self):[m
+[32m+[m[32m        """Provides a developer-friendly representation of the object."""[m
+[32m+[m[32m        return f"<ReferralTriageResult(patient_id={self.patient_id}, patient_name='{self.patient_name}')>"[m
