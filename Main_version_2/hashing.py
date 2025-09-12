@@ -62,11 +62,13 @@ def _random_digits(n: int) -> str:
 def _preserve_separators_replace_digits(orig: str) -> str:
     return ''.join(random.choice(string.digits) if ch.isdigit() else ch for ch in orig)
 
-def _is_excluded_phrase(phrase: str) -> bool:
-    clean_phrase = phrase.lower().strip('.,:;()[]{}"\'')
-    if clean_phrase in _exclusion_set: return True
-    for word in clean_phrase.split():
-        if word in _common_non_names: return True
+def _contains_excluded_term(phrase: str) -> bool:
+    """Check if any individual word in the phrase is in the exclusion set"""
+    words = phrase.lower().strip('.,:;()[]{}"\'').split()
+    for word in words:
+        clean_word = word.strip('.,:;()[]{}"\'')
+        if clean_word in _exclusion_set or clean_word in _common_non_names:
+            return True
     return False
 
 def _has_medical_context(text: str, start_pos: int, end_pos: int, window_size: int = 100) -> bool:
@@ -75,14 +77,17 @@ def _has_medical_context(text: str, start_pos: int, end_pos: int, window_size: i
     return bool(_medical_context_regex.search(text[text_start:text_end]))
 
 def _looks_like_name_pair(first: str, last: str) -> bool:
-    if _is_excluded_phrase(f"{first} {last}"): return False
+    # Check if either word individually is an excluded term
+    if _contains_excluded_term(first) or _contains_excluded_term(last):
+        return False
+    
     if len(first)<2 or len(first)>20 or len(last)<2 or len(last)>20: return False
     for pattern in [r'^\d+$', r'^[A-Z]{2,}$', r'[0-9]', r'[^a-zA-Z\-\' ]']:
         if re.search(pattern, first) or re.search(pattern, last): return False
     return True
 
 def _looks_like_single_name(word: str) -> bool:
-    if _is_excluded_phrase(word): return False
+    if _contains_excluded_term(word): return False
     if len(word)<2 or len(word)>20: return False
     if re.search(r'^\d+$|^[A-Z]{2,}$|[0-9]|[^a-zA-Z\-\' ]', word): return False
     return True
@@ -110,7 +115,6 @@ def hash_sensitive_info(text: str, file_name: str = "unknown_file") -> str:
 
     # Ensure all sub-maps exist
     used.setdefault("fullnames", {})
-    used.setdefault("lastnames", {})
     used.setdefault("nhis", {})
     used.setdefault("phones", {})
 
@@ -138,11 +142,15 @@ def hash_sensitive_info(text: str, file_name: str = "unknown_file") -> str:
         if not _looks_like_single_name(last): continue
         if _has_medical_context(text, m.start(), m.end()): continue
 
-        if last in used["lastnames"]:
-            last_map[last] = used["lastnames"][last]["fake"]
+        # Create a temporary full name for consistency (using "Dr" + last format to avoid "Title")
+        temp_full = f"Dr {last}"
+        if temp_full in used["fullnames"]:
+            _, fake_last = used["fullnames"][temp_full]["fake"].split(' ', 1)
         else:
             fake_last = random.choice(last_pool)
-            used["lastnames"][last] = {"fake": fake_last, "file": file_name}
+            used["fullnames"][temp_full] = {"fake": f"Dr {fake_last}", "file": file_name}
+        
+        if last not in last_map: 
             last_map[last] = fake_last
 
     # ----------------- Replace Emails -----------------
