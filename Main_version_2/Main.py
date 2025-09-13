@@ -9,8 +9,7 @@ from triage import triage_rules
 from sqlalchemy import create_engine
 from ai_feedback import loading_memory, accepting_feedback, build_feedback_examples
 from models import Base, ReferralTriageResult
-from structured_json_to_table import extract_data_from_text
-from structured_json_to_table import add_data_to_db
+from patient_details_to_db import extract_data_from_text, add_data_to_db
 
 # Loading .env file
 load_dotenv()
@@ -136,11 +135,9 @@ if __name__ == "__main__":
         print(processed_text)
 
         # Hash sensitive info
-        hashed_text = hash_sensitive_info(processed_text)
+        hashed_text = hash_sensitive_info(processed_text, file_name=file_name)
         print("\n\nHashed Text:")
         print(hashed_text)
-
-
 
         # Classifying pdfs by extracting semi-structured and unstructured chunks from the hashed text
         semi_and_unstructured_chunks = get_semi_and_unstructured(hashed_text)
@@ -149,7 +146,7 @@ if __name__ == "__main__":
         # Passing information to our AI triaging algorithm
         #print("\nAI Triage Output:")
         ai_triage_output = ai_triage(semi_unstructured_text, file_name, dob=dob)
-        print(ai_triage_output)
+        #print(ai_triage_output)
 
         feedback=input("Enter feedback here (or press Enter if decision was correct):")
         final_result=input("Enter final result (Priority X/Not Accepted, or press Enter if same as AI):")
