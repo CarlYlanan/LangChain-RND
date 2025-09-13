@@ -151,13 +151,13 @@ if __name__ == "__main__":
         ai_triage_output = ai_triage(semi_unstructured_text, file_name, dob=dob)
         print(ai_triage_output)
 
-        #feedback=input("Enter feedback here (or press Enter if decision was correct):")
-        #final_result=input("Enter final result (Priority X/Not Accepted, or press Enter if same as AI):")
+        feedback=input("Enter feedback here (or press Enter if decision was correct):")
+        final_result=input("Enter final result (Priority X/Not Accepted, or press Enter if same as AI):")
 
-        #if feedback.strip() or final_result.strip():
-            #accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
-        #else:
-            #print("Acknowledged. No feedback saved.")                
+        if feedback.strip() or final_result.strip():
+             accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
+        else:
+             print("Acknowledged. No feedback saved.")                
             
         
     # Stopping timer for performance metrics
