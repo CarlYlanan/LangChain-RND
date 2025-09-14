@@ -14,8 +14,12 @@ def extract_data_from_text(processed_text: str) -> dict:
         # This regex now stops capturing before the next field label like "Date of birth" or "Gender"
         "Patient Name": r"Patient [Nn]ame:?\s*(.*?)(?=\s\s|Date of birth)",
         "Date of Birth": r"Date of [Bb]irth:?\s*(\d{2}/\d{2}/\d{4})",
-        "NHS number": r"NHS [Nn]umber:?\s*([a-zA-Z0-9]+)",
-        "Hospital ID": r"Hospital ID:?\s*([a-zA-Z0-_]+)"
+        "Gender": r"Gender:?\s*(\w+)",
+        "NHS number": r"(?:NHS|NHI) [Nn]umber:?\s*([a-zA-Z0-9]+)",
+        "Email": r"(?:Patient(?:'s)?\s*|Contact\s*)?[Ee]mail(?: [Aa]ddress)?:?\s*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})",
+        "Hospital ID": r"Hospital ID:?\s*([a-zA-Z0-_]+)",
+        "Phone Number": r"(?:Patient\s*)?(?:[Tt]el(?:ephone)?|[Pp]hone|[Mm]obile|[Cc]ell|[Cc]ontact)\s*(?:[Nn]umber)?:?\s*(\+?[\d\s()\n-]{8,})",
+        "Pregnancy": r"Pregnancy:?s*(Yes|No|N/A|Unknown)"
     }
     patient_data = {}
     for field, pattern in patterns.items():
@@ -50,7 +54,7 @@ def add_data_to_db(extracted_data: dict, source_filename: str):
         with engine.connect() as connection:
             # 3. Check if a patient with this NHS number already exists
             sql_check_query = text("""
-                SELECT COUNT(*) FROM referral_triage_results WHERE nhs_number = :nhs_number
+                SELECT COUNT(*) FROM patients WHERE nhs_number = :nhs_number
             """)
             result = connection.execute(sql_check_query, {"nhs_number": nhs_number_to_check}).scalar()
 
@@ -62,11 +66,14 @@ def add_data_to_db(extracted_data: dict, source_filename: str):
             # 4. If the patient does not exist, prepare the data for insertion
             dob_str = extracted_data.get("Date of Birth")
             data_to_prepare = {
-                "patient_name": extracted_data.get("Patient Name"),
+                "name": extracted_data.get("Patient Name"),
                 "dob": datetime.strptime(dob_str, "%d/%m/%Y").date() if dob_str else None,
+                "gender": extracted_data.get("Gender"),
                 "nhs_number": nhs_number_to_check,
-                "hospital_id": extracted_data.get("Hospital ID"),
-                "source_file": source_filename
+                "phone_number": extracted_data.get("Phone Number"),
+                "email": extracted_data.get("Email")
+                #"hospital_id": extracted_data.get("Hospital ID"),
+                #"source_file": source_filename
             }
 
             # Create a final dictionary with only the fields that have data
@@ -81,7 +88,7 @@ def add_data_to_db(extracted_data: dict, source_filename: str):
             placeholders = ", ".join(f":{key}" for key in final_data_to_insert.keys())
             
             sql_insert_query = text(f"""
-                INSERT INTO referral_triage_results ({columns})
+                INSERT INTO patients ({columns})
                 VALUES ({placeholders})
             """)
 

@@ -2,7 +2,7 @@
   {
     "file_name": "Not Accepted 1.0.pdf",
     "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm identified)\nPriority 3: 1 (moderate symptoms of severe polyuria, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a case of severe polyuria, which is classified as moderate symptoms that may benefit from specialist input. There are no indications of urgent or cancer-related concerns, thus it is prioritized accordingly. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
-    "feedback": "The referral is considered “Not Accepted” rather than Priority 3 because the patient’s polyuria is not primarily a urological issue and can be managed in primary care or by another specialty",
+    "feedback": "The referral is considered \u201cNot Accepted\u201d rather than Priority 3 because the patient\u2019s polyuria is not primarily a urological issue and can be managed in primary care or by another specialty",
     "final_decision": "Not Accepted: 1"
   },
   {
@@ -94,5 +94,11 @@
     "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 1 (mild LUTS noted, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral primarily concerns a vasectomy assessment, with incidental findings of mild lower urinary tract symptoms and a normal PSA level. While the mild LUTS may warrant further evaluation, it does not indicate urgent concerns, thus it is classified as Priority 3 for non-urgent specialist evaluation. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
     "feedback": "The PSA level is abnormal for a 46 year old male so falls under the \"May benefit from specialist input but not urgent\".",
     "final_decision": "Priority 3"
+  },
+  {
+    "file_name": "Not Accepted 1.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a case of polyuria likely due to Lithium)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 1 (referral is for a condition likely managed by another specialty)\n\nThe referral is classified as Not Accepted because the patient's severe polyuria is likely related to Lithium-induced Nephrogenic Diabetes Insipidus, which falls outside the scope of urology and should be managed by nephrology or endocrinology. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "& C:/Users/no8wi/AppData/Local/Microsoft/WindowsApps/python3.11.exe \"c:/Users/no8wi/Documents/BCIS Project Paper/LangChain-RND/Main_version_2/Main.py\"",
+    "final_decision": "& C:/Users/no8wi/AppData/Local/Microsoft/WindowsApps/python3.11.exe \"c:/Users/no8wi/Documents/BCIS Project Paper/LangChain-RND/Main_version_2/Main.py\""
   }
 ]

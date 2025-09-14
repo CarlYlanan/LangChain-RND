@@ -5,9 +5,11 @@ FEEDBACK_FILE = "feedback_memory.json"
 
 # Load feedback memory from JSON file
 def loading_memory():
+    """Loads the feedback memory from the JSON file."""
     # If file doesn't exist create an empty JSON list
     if not os.path.exists(FEEDBACK_FILE):
-        with open(FEEDBACK_FILE, "w") as f:
+        # Added encoding here for consistency when writing the new file
+        with open(FEEDBACK_FILE, "w", encoding="utf-8") as f:
             json.dump([], f)
         return []
 
@@ -15,8 +17,8 @@ def loading_memory():
     if os.path.getsize(FEEDBACK_FILE) == 0:
         return []
     
-    # Load and return existing JSON file 
-    with open(FEEDBACK_FILE, "r") as f:
+    # Load and return existing JSON file, with the crucial encoding fix
+    with open(FEEDBACK_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 # Adding new feedback into JSON file 
