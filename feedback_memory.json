@@ -2,7 +2,7 @@
   {
     "file_name": "Not Accepted 1.0.pdf",
     "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm identified)\nPriority 3: 1 (moderate symptoms of severe polyuria, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a case of severe polyuria, which is classified as moderate symptoms that may benefit from specialist input. There are no indications of urgent or cancer-related concerns, thus it is prioritized accordingly. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
-    "feedback": "The referral is considered “Not Accepted” rather than Priority 3 because the patient’s polyuria is not primarily a urological issue and can be managed in primary care or by another specialty",
+    "feedback": "The referral is considered \u201cNot Accepted\u201d rather than Priority 3 because the patient\u2019s polyuria is not primarily a urological issue and can be managed in primary care or by another specialty",
     "final_decision": "Not Accepted: 1"
   },
   {
@@ -51,6 +51,54 @@
     "file_name": "Priority 3.2.pdf",
     "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 1 (persistent moderate LUTS with impact on quality of life)\nPriority 3: 0 (not moderate symptoms, as there is significant risk of harm)\nPriority 4: 0 (not stable or routine review, requires further assessment)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates persistent moderate lower urinary tract symptoms that are affecting the patient's quality of life, warranting a Priority 2 classification for timely assessment. There are no indications of urgent or cancer-related concerns, thus it is prioritized accordingly. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
     "feedback": "Incorrect classification. The AI has mistakenly escalated to Priority 2. The rules require 'Recurrent urinary retention' for Priority 2; this patient had a 'single, isolated incident' that resolved spontaneously. The patient's actual symptoms are 'Moderate LUTS' and 'Erectile Dysfunction', which are clear indicators for Priority 3.\"",
-    "final_decision": "Priority 3: 1"
+    "final_decision": "Priority 3"
+  },
+  {
+    "file_name": "Not Accepted 1.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 1 (severe polyuria impacting quality of life, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates severe polyuria that significantly affects the patient's quality of life, warranting a Priority 3 classification for non-urgent specialist evaluation. There are no indications of urgent or cancer-related concerns, thus it is prioritized accordingly. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "The likely diagnosis (Lithium-induced Nephrogenic Diabetes Insipidus) is not within the scope of urology. The referral should be redirected to Nephrology or Endocrinology.",
+    "final_decision": "Not Accepted"
+  },
+  {
+    "file_name": "Priority 1.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a follow-up appointment)\nPriority 4: 1 (routine follow-up for CT urogram and urine cytology)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral is classified as Priority 4 because it pertains to a routine follow-up appointment for a CT urogram and urine cytology, with no urgent concerns or significant symptoms present. This indicates that the patient is under ongoing management rather than requiring immediate intervention. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Not AcceptedDirect Match with Examples: The primary diagnosis is \"Painless visible haematuria\". This is synonymous with \"Macroscopic haematuria,\" which is the first example listed under your Priority 1 rules.",
+    "final_decision": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a follow-up appointment)\nPriority 4: 1 (routine follow-up for CT urogram and urine cytology)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral is classified as Priority 4 because it pertains to a routine follow-up appointment for a CT urogram and urine cytology, with no urgent concerns or significant symptoms present. This indicates that the patient is under ongoing management rather than requiring immediate intervention. \n\nDisclaimer, this response has been generated utilising ChatGPT."
+  },
+  {
+    "file_name": "Priority 1.1.pdf",
+    "ai_triage_output": "Priority 1: 1 (raised PSA and abnormal prostate findings suggest possible malignancy)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a follow-up for biopsy)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a raised PSA level and abnormal prostate findings, which necessitate a TRUS biopsy to rule out malignancy, classifying it as Priority 1. This case requires timely intervention due to the potential risk of cancer. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Direct Match with Trigger Terms: The diagnosis and history (\"frank haematuria\") directly align with the Priority 1 trigger terms: \"visible blood in urine\" and \"gross haematuria\".",
+    "final_decision": "Priority 1: 1 (raised PSA and abnormal prostate findings suggest possible malignancy)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a follow-up for biopsy)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates a raised PSA level and abnormal prostate findings, which necessitate a TRUS biopsy to rule out malignancy, classifying it as Priority 1. This case requires timely intervention due to the potential risk of cancer. \n\nDisclaimer, this response has been generated utilising ChatGPT."
+  },
+  {
+    "file_name": "Not Accepted 1.1.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a feeding regimen follow-up)\nPriority 4: 1 (routine follow-up for PEG feeding regimen)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral pertains to a routine follow-up for a PEG feeding regimen, with no urgent concerns or significant symptoms present. Therefore, it is classified as Priority 4 for ongoing management. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "A general term like 'routine review' is only relevant if it applies to an established urological condition (e.g, 'routine review of a stable renal cyst'). Do not classify a case as priority 1-4 if the only matching term is 'stable' or 'routine review'. It must have more matching trigger terms or indications of it being a urology case.",
+    "final_decision": "Not Accepted"
+  },
+  {
+    "file_name": "Priority 1.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a follow-up appointment)\nPriority 4: 1 (routine follow-up for CT urogram and urine cytology)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral is classified as Priority 4 because it pertains to a routine follow-up appointment for a CT urogram and urine cytology, with no urgent concerns or significant symptoms present. This indicates that the patient is under ongoing management rather than requiring immediate intervention. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Although not explicitly stating the clinician suspects malignancy or cancer, the fact they order tests to rule this out, implies it. In such cases, rate a case as priority 1.",
+    "final_decision": "Priority 1"
+  },
+  {
+    "file_name": "Priority 3.0.pdf",
+    "ai_triage_output": "Priority 1: 1 (microscopic haematuria indicates need to exclude malignancy)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a follow-up for cystoscopy)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral indicates microscopic haematuria, which necessitates further investigation to rule out malignancy, classifying it as Priority 1. The planned cystoscopy within 4 weeks aligns with the urgency required for this case. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "Priority 3 is for lower risk investigations. The investigation for microscopic haematuria is precisely to exclude malignancy. However the risk is statitstically lower than for visible blood, so the rules should assign it a lower urgency.",
+    "final_decision": "Priority 3"
+  },
+  {
+    "file_name": "Priority 4.2.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 1 (mild LUTS noted, may benefit from specialist input)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 0 (referral is within urology scope)\n\nThe referral primarily concerns a vasectomy assessment, with incidental findings of mild lower urinary tract symptoms and a normal PSA level. While the mild LUTS may warrant further evaluation, it does not indicate urgent concerns, thus it is classified as Priority 3 for non-urgent specialist evaluation. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "The PSA level is abnormal for a 46 year old male so falls under the \"May benefit from specialist input but not urgent\".",
+    "final_decision": "Priority 3"
+  },
+  {
+    "file_name": "Not Accepted 1.0.pdf",
+    "ai_triage_output": "Priority 1: 0 (no red flag symptoms indicating suspected cancer)\nPriority 2: 0 (no significant symptoms or risk of harm present)\nPriority 3: 0 (not moderate symptoms, as this is a case of polyuria likely due to Lithium)\nPriority 4: 0 (not a stable or routine review case)\nNot Accepted: 1 (referral is for a condition likely managed by another specialty)\n\nThe referral is classified as Not Accepted because the patient's severe polyuria is likely related to Lithium-induced Nephrogenic Diabetes Insipidus, which falls outside the scope of urology and should be managed by nephrology or endocrinology. \n\nDisclaimer, this response has been generated utilising ChatGPT.",
+    "feedback": "& C:/Users/no8wi/AppData/Local/Microsoft/WindowsApps/python3.11.exe \"c:/Users/no8wi/Documents/BCIS Project Paper/LangChain-RND/Main_version_2/Main.py\"",
+    "final_decision": "& C:/Users/no8wi/AppData/Local/Microsoft/WindowsApps/python3.11.exe \"c:/Users/no8wi/Documents/BCIS Project Paper/LangChain-RND/Main_version_2/Main.py\""
   }
 ]

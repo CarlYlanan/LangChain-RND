@@ -3,7 +3,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from hashing import hash_sensitive_info
-from ingester import ingesting_pdf
+from Ingester import ingesting_pdf
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from sqlalchemy import create_engine
@@ -39,12 +39,15 @@ def personal_info_insertion_to_db(processed_text: str, source_filename: str):
 
     # This now correctly receives only one item (the dictionary)
     extracted_data = extract_data_from_text(processed_text)
+    
 
    
     # This function call is now correct
     add_data_to_db(extracted_data, source_filename)
     
-    return (extracted_data, source_filename)
+    return (extracted_data)
+
+
 
 # Classifying pdf into sections
 # Excluding personal details from referrals
@@ -125,19 +128,23 @@ if __name__ == "__main__":
     for file_name, processed_text in all_docs:
         print(f"\n--- Processing: {file_name} ----------------------------------------")
 
+
+        extracted_data = personal_info_insertion_to_db(processed_text, file_name)
+        dob = extracted_data.get("Date of Birth")
+
         # Instead of inserting to DB, just simulate extracted personal info
-        structured_json_file = {
-            "Name": "Dummy Name",
-            "Date of Birth": "01/01/1970"
-        }
-        dob = structured_json_file.get("Date of Birth")
-        #print("\Processed")
-        #print(processed_text)
+        #structured_json_file = {
+        #    "Name": "Dummy Name",
+        #    "Date of Birth": "01/01/1970"
+        #}
+        #dob = structured_json_file.get("Date of Birth")
+        print("\Processed")
+        print(processed_text)
 
         # Hash sensitive info
-        hashed_text = hash_sensitive_info(processed_text)
-        #print("\n\nHashed Text:")
-        #print(hashed_text)
+        hashed_text = hash_sensitive_info(processed_text, file_name=file_name)
+        print("\n\nHashed Text:")
+        print(hashed_text)
 
         # Classifying pdfs by extracting semi-structured and unstructured chunks from the hashed text
         semi_and_unstructured_chunks = get_semi_and_unstructured(hashed_text)
@@ -146,17 +153,17 @@ if __name__ == "__main__":
         # Passing information to our AI triaging algorithm
         #print("\nAI Triage Output:")
         ai_triage_output = ai_triage(semi_unstructured_text, file_name, dob=dob)
-        print(ai_triage_output)
+        #print(ai_triage_output)
 
         #feedback=input("Enter feedback here (or press Enter if decision was correct):")
         #final_result=input("Enter final result (Priority X/Not Accepted, or press Enter if same as AI):")
 
         #if feedback.strip() or final_result.strip():
-            #accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
+        #    accepting_feedback(file_name, ai_triage_output, feedback or "No feedback", final_result or ai_triage_output)
         #else:
-            #print("Acknowledged. No feedback saved.")                
+        #    print("Acknowledged. No feedback saved.")                
             
         
     # Stopping timer for performance metrics
-    end_time = time.time()
-    print(f"Total execution time: {end_time - start_time:.2f} seconds")
+    #end_time = time.time()
+    #print(f"Total execution time: {end_time - start_time:.2f} seconds")
