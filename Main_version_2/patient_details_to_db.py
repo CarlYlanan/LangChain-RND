@@ -15,11 +15,11 @@ def extract_data_from_text(processed_text: str) -> dict:
         "Patient Name": r"Patient [Nn]ame:?\s*(.*?)(?=\s\s|Date of birth)",
         "Date of Birth": r"Date of [Bb]irth:?\s*(\d{2}/\d{2}/\d{4})",
         "Gender": r"Gender:?\s*(\w+)",
-        "NHS number": r"(?:NHS|NHI) [Nn]umber:?\s*([a-zA-Z0-9]+)",
+        "NHS number": r"(?:NHS|NHI) [Nn]umber:?\s*[^a-zA-Z0-9]*\s*([a-zA-Z0-9]+)",
         "Email": r"(?:Patient(?:'s)?\s*|Contact\s*)?[Ee]mail(?: [Aa]ddress)?:?\s*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})",
-        "Hospital ID": r"Hospital ID:?\s*([a-zA-Z0-_]+)",
+        "Hospital ID": r"Hospital ID:?\s*([a-zA-Z0-9-_]+)",
         "Phone Number": r"(?:Patient\s*)?(?:[Tt]el(?:ephone)?|[Pp]hone|[Mm]obile|[Cc]ell|[Cc]ontact)\s*(?:[Nn]umber)?:?\s*(\+?[\d\s()\n-]{8,})",
-        "Pregnancy": r"Pregnancy:?s*(Yes|No|N/A|Unknown)"
+        "Pregnancy": r"Pregnancy:?\s*(Yes|No|N/A|Unknown)"
     }
     patient_data = {}
     for field, pattern in patterns.items():
