@@ -3,7 +3,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from hashing import hash_sensitive_info
-from ingester import ingesting_pdf
+from Ingester import ingesting_pdf
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from sqlalchemy import create_engine
