@@ -12,6 +12,7 @@ class ReferralTriageResult(Base):
     dob = Column(Date)
     nhs_number = Column(String)
     hospital_id = Column(String)
+    gp_identifier = Column(String)
     fake_name = Column(String)
     result = Column(String)
     rationale = Column(String)

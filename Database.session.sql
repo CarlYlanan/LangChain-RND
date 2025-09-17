@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS referral_triage_results (
     dob DATE,
     nhs_number TEXT,
     hospital_id TEXT,
-    fake_name TEXT DEFAULT '',
+    gp_identifier TEXT, 
     result TEXT DEFAULT 'Pending Triage',
     rationale TEXT DEFAULT ''
 );

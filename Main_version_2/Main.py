@@ -3,7 +3,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from hashing import hash_sensitive_info
-from Ingester import ingesting_pdf
+from ingester import ingesting_pdf
 from classifier import get_semi_and_unstructured
 from triage import triage_rules
 from sqlalchemy import create_engine
@@ -24,7 +24,7 @@ def init_db():
     
     engine = create_engine(DATABASE_URL)
     Base.metadata.create_all(engine)
-    #print("Table `referral_triage_results` has been created or already exists.")
+    print("Table `referral_triage_results` has been created or already exists.")
 
 # Starting time to measure performance metrics
 import time
@@ -117,7 +117,7 @@ Not Accepted: 0 (reason, one line max)
 
 if __name__ == "__main__":
     # Skipping database init
-    # init_db()
+    init_db()
 
     # Path to folder containing clinical referrals
     sample_folder_path = "sample_documents"
@@ -138,13 +138,13 @@ if __name__ == "__main__":
         #    "Date of Birth": "01/01/1970"
         #}
         #dob = structured_json_file.get("Date of Birth")
-        print("\Processed")
-        print(processed_text)
+        #print("\Processed")
+        #print(processed_text)
 
         # Hash sensitive info
         hashed_text = hash_sensitive_info(processed_text, file_name=file_name)
-        print("\n\nHashed Text:")
-        print(hashed_text)
+        #print("\n\nHashed Text:")
+        #print(hashed_text)
 
         # Classifying pdfs by extracting semi-structured and unstructured chunks from the hashed text
         semi_and_unstructured_chunks = get_semi_and_unstructured(hashed_text)
@@ -153,7 +153,7 @@ if __name__ == "__main__":
         # Passing information to our AI triaging algorithm
         #print("\nAI Triage Output:")
         ai_triage_output = ai_triage(semi_unstructured_text, file_name, dob=dob)
-        #print(ai_triage_output)
+        print(ai_triage_output)
 
         #feedback=input("Enter feedback here (or press Enter if decision was correct):")
         #final_result=input("Enter final result (Priority X/Not Accepted, or press Enter if same as AI):")
@@ -165,5 +165,5 @@ if __name__ == "__main__":
             
         
     # Stopping timer for performance metrics
-    #end_time = time.time()
-    #print(f"Total execution time: {end_time - start_time:.2f} seconds")
+    end_time = time.time()
+    print(f"Total execution time: {end_time - start_time:.2f} seconds")
