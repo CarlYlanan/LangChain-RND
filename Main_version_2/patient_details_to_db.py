@@ -61,7 +61,7 @@ def add_data_to_db(extracted_data: dict, source_file: str):
 
             if result > 0:
                 #print("\n--- Database Check ---")
-                print(f"Patient with NHS number '{source_file}' already exists. Skipping insertion for '{source_file}'.")
+                #print(f"Patient with NHS number '{source_file}' already exists. Skipping insertion for '{source_file}'.")
                 return
 
             # 4. If the patient does not exist, prepare the data for insertion
