@@ -11,6 +11,7 @@ from ai_feedback import loading_memory, accepting_feedback, build_feedback_examp
 from models import Base, ReferralTriageResult
 from patient_details_to_db import extract_data_from_text, add_data_to_db
 from result_to_db import results_to_db
+from moving_referrals import move_documents
 
 # Loading .env file
 load_dotenv()
@@ -166,6 +167,9 @@ if __name__ == "__main__":
         
         #Adding ai triage results to database
         results_to_db(ai_triage_output, file_name)
+        
+        # Moving triaged documents to processed_folder
+        move_documents(file_name, sample_folder_path)
         
     # Stopping timer for performance metrics
     end_time = time.time()
