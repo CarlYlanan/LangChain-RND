@@ -14,34 +14,43 @@ llm = ChatOpenAI(temperature=0)
 
 #Prompt for classification (structured, semi strucured, or unstructured)
 prompt = PromptTemplate.from_template(
-    """You are a document classification assistant. Given a clinical paragraph, classify it as one of:
+    """You are a clinical document classification assistant.
 
-- 'structured': if the text is made up almost entirely of clearly labeled fields or values in "key value" format.
-- 'semi-structured': if the text contains some formatting or lists, but also includes prose or explanations.
-- 'unstructured': if it is free-form narrative, patient observations, or notes with little to no formatting.
+        Given a paragraph of clinical text, classify it as one of:
 
-Only reply with: structured, semi-structured, or unstructured.
+        - 'structured': The text is mostly made of clearly labeled fields (like "Name:", "DOB:", "GP:", "Contact:") in a consistent key-value format. It may include 1–2 short comments, but it is *not* narrative.
+        - 'semi-structured': The text mixes bullet points or labels *with* narrative or explanatory phrases. There is *some* formatting, but also sentences or notes.
+        - 'unstructured': The text is free-form narrative, observations, or clinical notes without clear formatting.
 
-Examples:
----
-Text:
-"Patient Name: Tom Linacre
-NHS number: 789123456
-Contact type: First appointment "
--> structured
+        Only reply with: structured, semi-structured, or unstructured.
 
-Text:
-"Patient presents with recurrent UTI symptoms. Prior labs suggest ongoing infection..."
--> unstructured
+        Examples:
+        ---
+        Text:
+        (If you these headers with or without the colon it is structured)
+        Patient Name: Tom Linacre  
+        NHS number: 789123456
+        GP Name: Alistair Yorick
+        Patient Address: 1 Bradley Walsh Avenue, Elstree, Auckland 
+        GP Address: 2B Elsinore Gardens, Kronborg  
+        Contact type: First appointment
+        "
+        → structured
 
-Text:
-"History: Chronic kidney pain. Treatment: Reviewed CT scans. Advised surgery."
--> semi-structured
----
-Text:
-{text}
-→"""
+        Text:
+        "Assessment: Chronic abdominal pain with progressive worsening over the last two weeks. Plan: MRI scheduled."
+        → semi-structured
+
+        Text:
+        "Patient presents with severe abdominal pain and nausea. CT scan from last week shows inflammation in lower bowel."
+        → unstructured
+
+        ---
+        Text:
+        {text}
+        →"""
 )
+
 
 classifier_chain = prompt | llm
 
@@ -149,10 +158,10 @@ def get_semi_and_unstructured(text: str):
     semi = sections["semi_structured"]
     unstructured = sections["unstructured"]
 
-    '''
-
-    # Print full chunks for client validation, uncomment if needed
     
+    
+    #Print full chunks for client validation, uncomment if needed
+    """
     print("\n=== FULL EXTRACTED TEXT ===")
 
     
@@ -170,8 +179,11 @@ def get_semi_and_unstructured(text: str):
     if unstructured:
         print("\n--- Unstructured ---")
         for i, chunk in enumerate(unstructured, 1):
+      
             print(f"\n[{i}] {chunk}")
-    
-    '''
+    """  
+
     return semi + unstructured
+
+   
     
